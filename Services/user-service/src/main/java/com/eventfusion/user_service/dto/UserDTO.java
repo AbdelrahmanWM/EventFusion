@@ -16,7 +16,8 @@ public class UserDTO {
 
         private UserStatus accountStatus;
 
-        public UserDTO(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
+        public UserDTO(String id,String username, String firstName, String lastName, String email, String phoneNumber) {
+            this.id=id;
             this.username = username;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -81,5 +82,16 @@ public class UserDTO {
             this.accountStatus = accountStatus;
         }
 
-
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", accountStatus=" + accountStatus +
+                '}';
+    }
 }

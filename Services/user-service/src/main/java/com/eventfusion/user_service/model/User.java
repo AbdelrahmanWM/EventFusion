@@ -1,5 +1,6 @@
 package com.eventfusion.user_service.model;
 
+import com.eventfusion.user_service.dto.UserDTO;
 import com.eventfusion.user_service.enums.UserStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -19,6 +20,7 @@ public class User {
     @NotBlank(message="Last name is required")
     private String lastName;
     @Indexed(unique=true)
+
     private String email;
     @NotBlank(message="Phone number is required")
     @Size(min=10,max=15, message="Phone number must be between 10 and 15 digits")
@@ -103,5 +105,49 @@ public class User {
 
     public void setAccountStatus(UserStatus accountStatus) {
         this.accountStatus = accountStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", accountStatus=" + accountStatus +
+                '}';
+    }
+
+    public void updateFromUserDTO(UserDTO userDTO){
+        System.out.println(userDTO);
+        System.out.println(this);
+        if (userDTO.getUsername() != null) {
+            this.setUsername(userDTO.getUsername());
+        }
+
+        if (userDTO.getFirstName() != null) {
+            this.setFirstName(userDTO.getFirstName());
+        }
+
+        if (userDTO.getLastName() != null) {
+            this.setLastName(userDTO.getLastName());
+        }
+
+        if (userDTO.getEmail() != null) {
+            this.setEmail(userDTO.getEmail());
+        }
+
+        if (userDTO.getPhoneNumber() != null) {
+            this.setPhoneNumber(userDTO.getPhoneNumber());
+        }
+        System.out.println(this);
+
+
+        if (userDTO.getAccountStatus() != null) {
+            this.setAccountStatus(userDTO.getAccountStatus()); // Enum value from UserStatus (PENDING, ACTIVE, etc.)
+        }
     }
 }
