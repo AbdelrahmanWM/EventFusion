@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserServiceImp implements UserService{
     @Autowired
@@ -28,21 +32,37 @@ public class UserServiceImp implements UserService{
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return null;
+        List<UserDTO>result=new ArrayList<>();
+        List<User>users = userRepository.findAll();
+        for(User user: users){
+            result.add(userMapper.userToUserDTO(user));
+        }
+        return result;
     }
 
     @Override
-    public UserDTO getUserById(String id) {
-        return null;
+    public Optional<UserDTO> getUserById(String id) {
+
+        Optional<User> user = userRepository.findById(id);
+        return user.map(userMapper::userToUserDTO);
+
     }
 
     @Override
     public UserDTO updateUser(String id, UserDTO userDTO) {
-        return null;
+        Optional<User> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty()){
+            return null;
+        }
+        User user=foundUser.get();
+        user.updateFromUserDTO(userDTO);
+        User updatedUser =userRepository.save(user);
+        return userMapper.userToUserDTO(updatedUser);
+
     }
 
     @Override
     public void deleteUser(String id) {
-
+        userRepository.deleteById(id);
     }
 }
