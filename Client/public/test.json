@@ -1,0 +1,15 @@
+{
+    "name": "Test User",
+    "age": 30,
+    "city": "Montréal",
+    "data": [
+      {
+        "id": 1,
+        "value": "First Item"
+      },
+      {
+        "id": 2,
+        "value": "Second Item"
+      }
+    ]
+  }
