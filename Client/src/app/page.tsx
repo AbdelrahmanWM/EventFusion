@@ -97,7 +97,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
-              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6">
+              <div className="flex flex-col items-center space-y-2 rounded-lg border p-5">
                 <Calendar className="h-12 w-12 text-primary" />
                 <h3 className="text-xl font-bold">Event Planning & Scheduling</h3>
                 <p className="text-center text-muted-foreground">
@@ -281,7 +281,7 @@ export default function HomePage() {
       <footer className="w-full border-t py-6 md:py-0">
         <div className="container mx-auto flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © {new Date().getFullYear()} Smart Education Events System (SEES). All rights reserved.
+            © {new Date().getFullYear()} Smart Education Events System (SEES) - SOEN343. All rights reserved.
           </p>
           <div className="flex gap-4">
             <Link href="#" className="text-sm font-medium hover:underline underline-offset-4">
