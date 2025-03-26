@@ -14,10 +14,11 @@ import {
 } from "lucide-react"
 
 import Hero from "../public/images/hero.png"
+import ModeToggle from "./components/ModeToggle"
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen transition-all">
+    <div className='flex flex-col min-h-screen transition-all`'>
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto flex h-16 items-center justify-between">
