@@ -118,6 +118,7 @@ export default function HomePage() {
                   Live polling, Q&A sessions, chatrooms, and personalized itineraries.
                 </p>
               </div>
+              <Link href="/event-promotion">
               <div className="flex flex-col items-center space-y-2 rounded-lg border p-6">
                 <Megaphone className="h-12 w-12 text-primary" />
                 <h3 className="text-xl font-bold">Event Promotion</h3>
@@ -125,6 +126,7 @@ export default function HomePage() {
                   Integrated marketing tools, email campaigns, and customizable event pages.
                 </p>
               </div>
+              </Link>
               <div className="flex flex-col items-center space-y-2 rounded-lg border p-6">
                 <FolderArchive className="h-12 w-12 text-primary" />
                 <h3 className="text-xl font-bold">Resource Management</h3>
