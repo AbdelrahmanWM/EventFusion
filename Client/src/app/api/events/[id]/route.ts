@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 
-// Reference to the mock database from the parent route
-// In a real app, you'd use a proper database
-const events: any[] = [];
+import {Event} from "../../../types/event"
+const events: Event[] = [];
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const event = events.find(e => e.id === params.id);
+    const { id } = await params;
+    const event = events.find(e => e.id === id);
     
     if (!event) {
       return NextResponse.json(
@@ -28,64 +27,64 @@ export async function GET(
     );
   }
 }
+//for later
+// export async function PUT(
+//   request: NextRequest,
+//   context: { params: { id: string } }
+// ) {
+//   try {
+//     const eventId = context.params.id;
+//     const data = await request.json();
+//     const index = events.findIndex(e => e.id === eventId);
+    
+//     if (index === -1) {
+//       return NextResponse.json(
+//         { error: "Event not found" },
+//         { status: 404 }
+//       );
+//     }
+    
+//     const updatedEvent = {
+//       ...events[index],
+//       ...data,
+//       id: eventId,
+//     };
+    
+//     events[index] = updatedEvent;
+    
+//     return NextResponse.json({ event: updatedEvent });
+//   } catch (error) {
+//     console.error("Error updating event:", error);
+//     return NextResponse.json(
+//       { error: "Internal Server Error" },
+//       { status: 500 }
+//     );
+//   }
+// }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const data = await request.json();
-    const index = events.findIndex(e => e.id === params.id);
+// export async function DELETE(
+//   request: NextRequest,
+//   context: { params: { id: string } }
+// ) {
+//   try {
+//     const eventId = context.params.id;
+//     const index = events.findIndex(e => e.id === eventId);
     
-    if (index === -1) {
-      return NextResponse.json(
-        { error: "Event not found" },
-        { status: 404 }
-      );
-    }
+//     if (index === -1) {
+//       return NextResponse.json(
+//         { error: "Event not found" },
+//         { status: 404 }
+//       );
+//     }
     
-    // Update the event
-    const updatedEvent = {
-      ...events[index],
-      ...data,
-      id: params.id, // Ensure ID doesn't change
-    };
+//     events.splice(index, 1);
     
-    events[index] = updatedEvent;
-    
-    return NextResponse.json({ event: updatedEvent });
-  } catch (error) {
-    console.error("Error updating event:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const index = events.findIndex(e => e.id === params.id);
-    
-    if (index === -1) {
-      return NextResponse.json(
-        { error: "Event not found" },
-        { status: 404 }
-      );
-    }
-    
-    // Remove the event
-    events.splice(index, 1);
-    
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Error deleting event:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json({ success: true });
+//   } catch (error) {
+//     console.error("Error deleting event:", error);
+//     return NextResponse.json(
+//       { error: "Internal Server Error" },
+//       { status: 500 }
+//     );
+//   }
+// }
