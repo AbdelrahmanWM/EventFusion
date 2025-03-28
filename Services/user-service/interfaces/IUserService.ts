@@ -6,4 +6,5 @@ export interface IUserService {
     createUser(userData: IUser):Promise<IUser>;
     updateUser(username: string, updates: Partial<IUser>):Promise<IUser|null>;
     deleteUser(username: String):Promise<IUser|null>;
+    comparePasswords(inputPassword: string, hashedPassword: string):Promise<boolean>;
 }
