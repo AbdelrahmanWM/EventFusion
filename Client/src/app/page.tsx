@@ -17,7 +17,7 @@ import Hero from "../public/images/hero.png"
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen transition-all">
+    <div className='flex flex-col min-h-screen transition-all`'>
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto flex h-16 items-center justify-between">
@@ -97,13 +97,15 @@ export default function HomePage() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
-              <div className="flex flex-col items-center space-y-2 rounded-lg border p-5">
-                <Calendar className="h-12 w-12 text-primary" />
-                <h3 className="text-xl font-bold">Event Planning & Scheduling</h3>
-                <p className="text-center text-muted-foreground">
-                  Create detailed event agendas, manage venue bookings, and integrate with calendars.
-                </p>
-              </div>
+            <Link href="/event-planning">
+                <div className="flex flex-col items-center space-y-2 rounded-lg border p-5">
+                  <Calendar className="h-12 w-12 text-primary" />
+                  <h3 className="text-xl font-bold">Event Planning & Scheduling</h3>
+                  <p className="text-center text-muted-foreground">
+                    Create detailed event agendas, manage venue bookings, and integrate with calendars.
+                  </p>
+                </div>
+             </Link>
               <div className="flex flex-col items-center space-y-2 rounded-lg border p-6">
                 <Users className="h-12 w-12 text-primary" />
                 <h3 className="text-xl font-bold">Stakeholder Management</h3>
