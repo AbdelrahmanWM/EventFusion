@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-import { Role } from "role_service/enums/role";
-import { IRole } from "role_service/interfaces/IRole";
+import { Role } from "role-service/enums/role";
+import { IRole } from "role-service/interfaces/IRole";
 
 interface IRoleDocument extends IRole, Document {}
 
