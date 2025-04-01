@@ -1,62 +1,51 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 
-const PromotionForm: React.FC = () => {
+interface Promotion {
+  title: string;
+  description: string;
+  date: string;
+  location: string;
+  image: string;
+}
+
+const PromotionForm: React.FC<{ onAddPromotion: (promotion: Promotion) => void }> = ({ onAddPromotion }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [image, setImage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter(); // Use the router to redirect after submission
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      // Send the promotion data to the backend
-      const response = await fetch("/api/promotions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          description,
-          date,
-          location,
-          image,
-        }),
-      });
+    const newPromotion: Promotion = {
+      title,
+      description,
+      date,
+      location,
+      image,
+    };
 
-      if (response.ok) {
-        alert("Submission Successful");
-        // Reset form fields
-        setTitle("");
-        setDescription("");
-        setDate("");
-        setLocation("");
-        setImage("");
-        // Redirect to the Event Promotion page
-        router.push("/event-promotion");
-      } else {
-        alert("There was an error with your submission. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error submitting promotion:", error);
-      alert("An error occurred. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    onAddPromotion(newPromotion);
+
+    // Reset fields
+    setTitle("");
+    setDescription("");
+    setDate("");
+    setLocation("");
+    setImage("");
+    setIsSubmitting(false);
   };
 
   return (
     <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-3xl font-bold mb-4 text-center text-gray-800">Add Event Promotion</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Title */}
         <div className="space-y-2">
           <label htmlFor="title" className="block text-lg font-semibold text-gray-700">Title</label>
           <input
@@ -69,6 +58,7 @@ const PromotionForm: React.FC = () => {
           />
         </div>
 
+        {/* Description */}
         <div className="space-y-2">
           <label htmlFor="description" className="block text-lg font-semibold text-gray-700">Description</label>
           <textarea
@@ -80,6 +70,7 @@ const PromotionForm: React.FC = () => {
           />
         </div>
 
+        {/* Date */}
         <div className="space-y-2">
           <label htmlFor="date" className="block text-lg font-semibold text-gray-700">Date</label>
           <input
@@ -92,6 +83,7 @@ const PromotionForm: React.FC = () => {
           />
         </div>
 
+        {/* Location */}
         <div className="space-y-2">
           <label htmlFor="location" className="block text-lg font-semibold text-gray-700">Location</label>
           <input
@@ -104,6 +96,7 @@ const PromotionForm: React.FC = () => {
           />
         </div>
 
+        {/* Image */}
         <div className="space-y-2">
           <label htmlFor="image" className="block text-lg font-semibold text-gray-700">Image URL</label>
           <input
@@ -111,11 +104,11 @@ const PromotionForm: React.FC = () => {
             type="text"
             value={image}
             onChange={(e) => setImage(e.target.value)}
-            required
             className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
+        {/* Submit */}
         <div className="flex justify-center mt-6">
           <button
             type="submit"

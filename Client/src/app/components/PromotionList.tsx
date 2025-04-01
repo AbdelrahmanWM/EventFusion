@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import PromotionCard, { Promotion, mockPromotions } from "./PromotionCard";
-import Link from "next/link"; // Import Link from Next.js
+import React from "react";
+import PromotionCard, { Promotion } from "./PromotionCard";
 
-const PromotionList: React.FC = () => {
-  const [promotions, setPromotions] = useState<Promotion[]>(mockPromotions);
+interface PromotionListProps {
+  promotions: Promotion[];
+  setPromotions: React.Dispatch<React.SetStateAction<Promotion[]>>;
+}
 
+const PromotionList: React.FC<PromotionListProps> = ({ promotions, setPromotions }) => {
   // Function to delete an event
   const handleDelete = (id: number) => {
     setPromotions((prev) => prev.filter((promotion) => promotion.id !== id));
