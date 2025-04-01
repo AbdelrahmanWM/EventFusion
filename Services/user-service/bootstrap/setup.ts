@@ -24,7 +24,7 @@ public static async setup(){
     const userController: UserController=UserController.getInstance(userService);
     const userRouter: UserRouter=UserRouter.getInstance(userController,authenticateJWT);
     const authController: AuthController= AuthController.getInstance(userService,authService);
-    const authRouter: AuthRouter=AuthRouter.getInstance(authController,authenticateJWT);
+    const authRouter: AuthRouter=AuthRouter.getInstance(authController);
     const mongoDB: MongoDB=await MongoDB.getInstance(storageService);
     return {config, passportJWTStrategy,userRouter,authRouter};
 }
