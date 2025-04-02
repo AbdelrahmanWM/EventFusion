@@ -44,7 +44,7 @@ class UserServiceApp {
     }
     private initializeRoutes(): void{
         this.app.use("/auth",this.authRouter.getRouter());
-        this.app.use("/users",this.userRouter.getRouter());
+        this.app.use("/",this.userRouter.getRouter());
     }
     public start():void{
         this.app.listen(this.port, ()=>{

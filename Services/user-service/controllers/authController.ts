@@ -5,7 +5,7 @@ import { IUser } from "../interfaces/IUser";
 import {
   sendErrorResponse,
   sendSuccessResponse,
-} from "../../common-utilities/Response";
+} from "../../shared/utilities/Response";
 
 export class AuthController {
   private static instance: AuthController;

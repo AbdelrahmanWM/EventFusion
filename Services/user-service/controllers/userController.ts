@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {
   sendErrorResponse,
   sendSuccessResponse,
-} from "../../common-utilities/Response";
+} from "../../shared/utilities/Response";
 import { IUserService } from "../interfaces/IUserService";
 
 // Dependency Injection Pattern
@@ -14,15 +14,15 @@ import { IUserService } from "../interfaces/IUserService";
 // and implemented by UserService
 
 export class UserController {
-    private static instance: UserController;
+  private static instance: UserController;
 
   userService: IUserService;
   private constructor(userService: IUserService) {
     this.userService = userService;
   }
-  public static getInstance(userService: IUserService):UserController{
-    if (!UserController.instance){
-        UserController.instance=new UserController(userService);
+  public static getInstance(userService: IUserService): UserController {
+    if (!UserController.instance) {
+      UserController.instance = new UserController(userService);
     }
     return UserController.instance;
   }
