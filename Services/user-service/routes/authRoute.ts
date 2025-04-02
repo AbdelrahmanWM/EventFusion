@@ -1,22 +1,19 @@
 import { Router} from "express";
 import { AuthController } from "../controllers/authController";
-import { AuthenticateJWT } from "../middleware/authMiddleware";
 
 // singleton
 export default class AuthRouter{
     private static instance: AuthRouter;
-    authController: AuthController;
-    authenticateJWT: AuthenticateJWT;
-    router:Router
-    private constructor(authController: AuthController,authenticateJWT: AuthenticateJWT){
+    private authController: AuthController;
+    private router:Router
+    private constructor(authController: AuthController){
         this.router=Router();
         this.authController=authController;
-        this.authenticateJWT=authenticateJWT;
         this.bindRoutes();
     }
-    public static getInstance(authController: AuthController,authenticateJWT: AuthenticateJWT):AuthRouter{
+    public static getInstance(authController: AuthController):AuthRouter{
         if(!AuthRouter.instance){
-            AuthRouter.instance=new AuthRouter(authController,authenticateJWT);
+            AuthRouter.instance=new AuthRouter(authController);
         }
         return AuthRouter.instance;
     }

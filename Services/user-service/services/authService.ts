@@ -24,6 +24,6 @@ export class AuthService {
       expiresIn: tokenExpiry, // can be a string like "1h" or a number like 3600
     };
 
-    return jwt.sign({ username: user.username }, jwtSecret, options);
+    return jwt.sign({ username: user.username,userID: user._id }, jwtSecret, options);
   }
 }

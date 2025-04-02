@@ -30,7 +30,8 @@ class UserService implements IUserService {
         }
     }
 
-    async getUserByUsername(username: string):Promise<IUser|null> {
+    async getUserByUsername(username: string):Promise<IUser
+    > {
         try{
             const matching = await User.find({username:username});
             if (!matching){
@@ -57,7 +58,7 @@ class UserService implements IUserService {
               
         }
     }
-    async updateUser(username: string, updates: Partial<IUser>):Promise<IUser|null>{
+    async updateUser(username: string, updates: Partial<IUser>):Promise<IUser>{
         try{
             const user: IUser| null = await User.findOneAndUpdate({username:username},updates,{new:true});
             if (!user){
@@ -69,7 +70,7 @@ class UserService implements IUserService {
         }
     }
 
-    async deleteUser(username: String):Promise<IUser|null>{
+    async deleteUser(username: String):Promise<IUser>{
         try{
             const user:IUser|null = await User.findOneAndDelete({username:username});
             if (!user){

@@ -8,7 +8,7 @@ import Config from "../config/config";
 import { IUserService } from "../interfaces/IUserService";
 import ConsoleLoggerService from "../../logger-service/services/consoleLoggerService";
 
-// Singleton design pattern
+// Strategy design pattern
 // Dependency Injection of Config, and IUserService
 export class PassportJWTStrategy {
   private static instance: PassportJWTStrategy;

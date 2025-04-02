@@ -24,18 +24,9 @@ class Config {
   public getPort(): number {
     try {
       const port: string =
-        this.storageService.loadVariable("USER_SERVICE_PORT");
-      return parseInt(port);
-    } catch (err: any) {
-      throw err;
-    }
-  }
+        this.storageService.loadVariable("ROLE_SERVICE_PORT");
 
-  public getJwtSecret(): string {
-    try {
-      const secret: string | undefined =
-        this.storageService.loadVariable("JWT_SECRET");
-      return secret;
+      return parseInt(port);
     } catch (err: any) {
       throw err;
     }

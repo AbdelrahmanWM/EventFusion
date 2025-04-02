@@ -1,5 +1,4 @@
-import { IStorageService } from "../../storage-service/interfaces/IStorageService";
-
+import { IStorageService } from "storage-service/interfaces/IStorageService";
 // Singleton design pattern
 
 class Config {
@@ -23,6 +22,25 @@ class Config {
 
   public getPort(): number {
     try {
+      const port: string = this.storageService.loadVariable("GATEWAY_PORT");
+
+      return parseInt(port);
+    } catch (err: any) {
+      throw err;
+    }
+  }
+  public getEventServicePort(): number {
+    try {
+      const port: string =
+        this.storageService.loadVariable("ROLE_SERVICE_PORT");
+      return parseInt(port);
+    } catch (err: any) {
+      throw err;
+    }
+  }
+
+  public getUserServicePort(): number {
+    try {
       const port: string =
         this.storageService.loadVariable("USER_SERVICE_PORT");
       return parseInt(port);
@@ -31,11 +49,20 @@ class Config {
     }
   }
 
-  public getJwtSecret(): string {
+  public getRoleServicePort(): number {
     try {
-      const secret: string | undefined =
-        this.storageService.loadVariable("JWT_SECRET");
-      return secret;
+      const port: string =
+        this.storageService.loadVariable("ROLE_SERVICE_PORT");
+      return parseInt(port);
+    } catch (err: any) {
+      throw err;
+    }
+  }
+  
+  public getBaseURL(): string {
+    try {
+      const baseURL: string = this.storageService.loadVariable("BASE_URL");
+      return baseURL;
     } catch (err: any) {
       throw err;
     }

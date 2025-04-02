@@ -7,9 +7,9 @@ import UserController from "../controllers/userController";
 // Separation of concerns
 export default class UserRouter{
     private static instance: UserRouter;
-    authenticateJWT: AuthenticateJWT;
-    userController: UserController;
-    router:Router;
+    private authenticateJWT: AuthenticateJWT;
+    private userController: UserController;
+    private router:Router;
     private constructor(userController: UserController,authenticateJWT: AuthenticateJWT){
         this.router=Router();
         this.userController=userController;
