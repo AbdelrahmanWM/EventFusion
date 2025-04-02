@@ -36,7 +36,7 @@ class RoleServiceApp {
     this.app.use(cors());
   }
   private initializeRoutes(): void {
-    this.app.use("/roles", this.roleRouter.getRouter());
+    this.app.use("/", this.roleRouter.getRouter());
   }
   public start(): void {
     this.app.listen(this.port, () => {

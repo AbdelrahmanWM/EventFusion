@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {
   sendErrorResponse,
   sendSuccessResponse,
-} from "../../common-utilities/Response";
+} from "../../shared/utilities/Response";
 import { IRoleService } from "role-service/interfaces/IRoleService";
 import { IRole } from "role-service/interfaces/IRole";
 // Dependency Injection Pattern
