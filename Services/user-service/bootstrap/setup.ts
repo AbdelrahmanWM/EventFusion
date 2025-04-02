@@ -10,11 +10,12 @@ import UserController from "../controllers/userController";
 import UserRouter from "../routes/userRoute";
 import { AuthController } from "../controllers/authController";
 import AuthRouter from "../routes/authRoute";
-import MongoDB from "shared/clients/MongoDB";
+import MongoDB from "shared/database/MongoDB";
 
 export default class Setup {
   public static async setup() {
-    const storageService: DotenvStorageService = DotenvStorageService.getInstance();
+    const storageService: DotenvStorageService =
+      DotenvStorageService.getInstance();
     const config: Config = Config.getInstance(storageService);
     const userService: IUserService = UserService.getInstance();
     const authService: IAuthService = AuthService.getInstance(config);

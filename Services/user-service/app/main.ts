@@ -1,4 +1,4 @@
-import MongoDB from "shared/clients/MongoDB";
+import MongoDB from "shared/database/MongoDB";
 import Setup from "../bootstrap/setup";
 import UserServiceApp from "./userServiceApp";
 
