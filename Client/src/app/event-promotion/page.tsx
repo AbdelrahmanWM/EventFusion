@@ -1,21 +1,48 @@
+// EventPromotionPage.tsx
 "use client";
 
-import Link from "next/link";
 import React, { useState } from "react";
-import PromotionList from "../components/PromotionList"; 
+import Link from "next/link";
+import PromotionList from "../components/PromotionList";
 import PromotionForm from "../components/PromotionForm";
-import EmailCampaignForm from "../components/EmailCampaignForm"; // Import the Email Campaign Form
+import EmailCampaignForm from "../components/EmailCampaignForm";
+
+import { Promotion, mockPromotions } from "../components/PromotionCard";
 
 const EventPromotionPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"promotions" | "emailCampaigns">("promotions");
+  const [promotions, setPromotions] = useState<Promotion[]>(mockPromotions);
+  const [emailLogs, setEmailLogs] = useState<any[]>([]);
+
+  const handleAddPromotion = (newPromotion: Omit<Promotion, "id" | "image">) => {
+    const placeholderImages = [
+      "/images/tech-conference.jpg",
+      "/images/ai-summit.jpg",
+      "/images/startup-expo.jpg",
+    ];
+    const randomImage = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
+    const enrichedPromotion = { ...newPromotion, id: Date.now(), image: randomImage };
+    setPromotions((prev) => [...prev, enrichedPromotion]);
+    alert("Event added successfully!");
+  };
+
+  const handleEmailCampaignSubmit = (campaignData: any) => {
+    const newLog = {
+      id: Date.now(),
+      subject: campaignData.subject,
+      status: "Sent",
+      sentAt: new Date().toLocaleString(),
+      recipients: campaignData.recipients,
+    };
+    setEmailLogs((prev) => [...prev, newLog]);
+    alert("Email campaign scheduled (mocked) successfully!");
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
       <div className="container mx-auto p-6 flex-grow">
         <h1 className="text-3xl font-bold mb-6">Event Promotions</h1>
 
-        {/* Tabs for switching between Promotions and Email Campaigns */}
         <div className="flex space-x-4 border-b mb-4">
           <button
             className={`px-4 py-2 ${activeTab === "promotions" ? "border-b-2 border-blue-600 font-bold" : "text-gray-600"}`}
@@ -31,14 +58,18 @@ const EventPromotionPage: React.FC = () => {
           </button>
         </div>
 
-        {/* Conditionally Render Sections */}
+
         {activeTab === "promotions" ? (
           <>
-            <PromotionList />
-            <PromotionForm />
+            <PromotionList promotions={promotions} setPromotions={setPromotions} />
+            <PromotionForm onAddPromotion={handleAddPromotion} />
           </>
         ) : (
-          <EmailCampaignForm />
+          <EmailCampaignForm 
+            onSubmitCampaign={handleEmailCampaignSubmit} 
+            emailLogs={emailLogs} 
+            setEmailLogs={setEmailLogs} 
+          />
         )}
       </div>
 

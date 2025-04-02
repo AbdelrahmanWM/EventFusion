@@ -39,7 +39,16 @@ export const mockPromotions: Promotion[] = [
   },
 ];
 
-const PromotionCard: React.FC<Promotion & { onDelete: (id: number) => void; onUpdate: (event: Promotion) => void }> = ({ id, title, description, image, date, location, onDelete, onUpdate }) => {
+const PromotionCard: React.FC<Promotion & { onDelete: (id: number) => void; onUpdate: (event: Promotion) => void }> = ({
+  id,
+  title,
+  description,
+  image,
+  date,
+  location,
+  onDelete,
+  onUpdate,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedEvent, setEditedEvent] = useState({ id, title, description, image, date, location });
 
@@ -54,31 +63,55 @@ const PromotionCard: React.FC<Promotion & { onDelete: (id: number) => void; onUp
 
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden transition transform hover:scale-105 p-4">
-      <Link href={`/event-details/${id}`}>
-        {/* Event Card */}
-        {isEditing ? (
-          <div className="space-y-2">
-            <input className="w-full border p-2" name="title" value={editedEvent.title} onChange={handleEditChange} />
-            <textarea className="w-full border p-2" name="description" value={editedEvent.description} onChange={handleEditChange} />
-            <input className="w-full border p-2" name="date" value={editedEvent.date} onChange={handleEditChange} />
-            <input className="w-full border p-2" name="location" value={editedEvent.location} onChange={handleEditChange} />
-            <button className="bg-green-600 text-white px-4 py-2 rounded-md" onClick={handleSave}>Save</button>
+      {isEditing ? (
+        <div className="space-y-2">
+          <input className="w-full border p-2" name="title" value={editedEvent.title} onChange={handleEditChange} />
+          <textarea className="w-full border p-2" name="description" value={editedEvent.description} onChange={handleEditChange} />
+          <input className="w-full border p-2" name="date" value={editedEvent.date} onChange={handleEditChange} />
+          <input className="w-full border p-2" name="location" value={editedEvent.location} onChange={handleEditChange} />
+          <button className="bg-green-600 text-white px-4 py-2 rounded-md" onClick={handleSave}>Save</button>
+        </div>
+      ) : (
+        <>
+          {/* ✅ Only wrap this clickable part inside <Link> */}
+          <Link
+                href={{
+                  pathname: `/event-promotion/${id}`,
+                  query: {
+                    title,
+                    description,
+                    image,
+                    date,
+                    location,
+                  },
+                }}
+              >
+                <img src={image} alt={title} className="w-full h-48 object-cover rounded-t-lg" />
+                <div className="p-4">
+                  <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
+                  <p className="text-gray-600">{description}</p>
+                  <p className="text-sm text-gray-500 mt-2">📅 {date} | 📍 {location}</p>
+                </div>
+              </Link>
+
+
+          {/* ❌ Do NOT wrap these in <Link> */}
+          <div className="mt-4 flex gap-2 px-4">
+            <button
+              className="bg-red-600 text-white px-4 py-2 rounded-md"
+              onClick={() => onDelete(id)}
+            >
+              Delete
+            </button>
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded-md"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </button>
           </div>
-        ) : (
-          <>
-            <img src={image} alt={title} className="w-full h-48 object-cover rounded-t-lg" />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
-              <p className="text-gray-600">{description}</p>
-              <p className="text-sm text-gray-500 mt-2">📅 {date} | 📍 {location}</p>
-              <div className="mt-4 flex gap-2">
-                <button className="bg-red-600 text-white px-4 py-2 rounded-md" onClick={() => onDelete(id)}>Delete</button>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-md" onClick={() => setIsEditing(true)}>Edit</button>
-              </div>
-            </div>
-          </>
-        )}
-      </Link>
+        </>
+      )}
     </div>
   );
 };

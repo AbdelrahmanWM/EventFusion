@@ -1,44 +1,36 @@
-import { useParams } from "next/navigation";
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import SocialMediaShare from "../../components/SocialMediaShare"; // Import the SocialMediaShare component
+import SocialMediaShare from "../../components/SocialMediaShare";
 
 const EventDetailPage: React.FC = () => {
-  const { id } = useParams(); // Get the event id from URL parameters
-  const [promotion, setPromotion] = useState<any>(null); // Store event details
-  const [attendees, setAttendees] = useState<any[]>([]); // Store attendee list
+  const searchParams = useSearchParams();
+  const [promotion, setPromotion] = useState<any>(null);
+  const [attendees, setAttendees] = useState<any[]>([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    // Fetch event details from backend
-    const fetchEventDetails = async () => {
-      const response = await fetch(`/api/events/${id}`);
-      const data = await response.json();
-      setPromotion(data.event);
-      setAttendees(data.attendees);
+    const eventData = {
+      title: searchParams.get("title"),
+      description: searchParams.get("description"),
+      image: searchParams.get("image"),
+      date: searchParams.get("date"),
+      location: searchParams.get("location"),
     };
-
-    fetchEventDetails();
-  }, [id]);
+    setPromotion(eventData);
+  }, [searchParams]);
 
   const handleRegisterAttendee = async () => {
-    const newAttendee = { name, email, eventId: id };
-    const response = await fetch(`/api/attendees`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newAttendee),
-    });
-    if (response.ok) {
-      setAttendees([...attendees, newAttendee]);
-      setName('');
-      setEmail('');
-    } else {
-      alert('Error registering attendee');
-    }
+    const newAttendee = { name, email };
+    setAttendees([...attendees, newAttendee]);
+    setName('');
+    setEmail('');
   };
 
-  if (!promotion) {
+  if (!promotion || !promotion.title) {
     return (
       <div className="container mx-auto p-6">
         <h2 className="text-xl font-bold">Event not found</h2>
@@ -68,7 +60,7 @@ const EventDetailPage: React.FC = () => {
         title={promotion.title}
         description={promotion.description}
         imageUrl={promotion.image}
-        eventUrl={`https://yourdomain.com/event-details/${id}`} // Make sure to use the full event URL here
+        eventUrl={window.location.href}
       />
 
       <div className="attendees mb-6">
@@ -82,7 +74,6 @@ const EventDetailPage: React.FC = () => {
         </ul>
       </div>
 
-      {/* Attendee registration form */}
       <div className="register-attendee mt-6">
         <h3 className="text-xl font-bold mb-2">Register New Attendee</h3>
         <input
