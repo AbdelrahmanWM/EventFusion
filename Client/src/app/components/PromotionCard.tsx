@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
+import EventPromotionImg from "../../public/images/event-promotion.png"
+import Image from "next/image";
+
 export interface Promotion {
   id: number;
   title: string;
@@ -17,7 +20,7 @@ export const mockPromotions: Promotion[] = [
     id: 1,
     title: "Tech Conference 2025",
     description: "Join industry leaders to discuss the future of technology.",
-    image: "/images/tech-conference.jpg",
+    image: "../../public/images/event-promotion.png",
     date: "April 15, 2025",
     location: "San Francisco, CA",
   },
@@ -25,7 +28,7 @@ export const mockPromotions: Promotion[] = [
     id: 2,
     title: "AI Innovation Summit",
     description: "Explore AI advancements and networking opportunities.",
-    image: "/images/ai-summit.jpg",
+    image: "../../public/images/event-promotion.png",
     date: "May 22, 2025",
     location: "New York, NY",
   },
@@ -33,7 +36,7 @@ export const mockPromotions: Promotion[] = [
     id: 3,
     title: "Startup Expo 2025",
     description: "Connect with startups and investors in an exciting event.",
-    image: "/images/startup-expo.jpg",
+    image: "../../public/images/event-promotion.png",
     date: "June 10, 2025",
     location: "Los Angeles, CA",
   },
@@ -86,7 +89,7 @@ const PromotionCard: React.FC<Promotion & { onDelete: (id: number) => void; onUp
                   },
                 }}
               >
-                <img src={image} alt={title} className="w-full h-48 object-cover rounded-t-lg" />
+                <Image src={EventPromotionImg} alt={title} className="w-full h-48 object-cover rounded-t-lg" />
                 <div className="p-4">
                   <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
                   <p className="text-gray-600">{description}</p>
