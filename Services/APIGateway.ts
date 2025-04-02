@@ -6,11 +6,11 @@ import * as http from "http"; // Importing http to get RequestOptions
 
 /**
  * APIGateway Class Design Patterns:
- * 1. **Singleton Pattern**: Ensures that only one instance of the gateway is created (static `getInstance` method).
- * 2. **Facade Pattern**: Provides a unified interface for routing requests to multiple backend services (`setupRoutes`).
- * 3. **Proxy Pattern**: Acts as an intermediary to forward requests to backend services (`proxyOptions`).
- * 4. **Factory Method Pattern**: The `formURL` method constructs service URLs dynamically based on baseURL and port.
- * 5. **Middleware Design**: Implements error handling and request modification using middleware (`setupErrorHandling` and `proxyReqOptDecorator`).
+ * 1. Singleton Pattern: Ensures that only one instance of the gateway is created (static `getInstance` method).
+ * 2. Facade Pattern: Provides a unified interface for routing requests to multiple backend services (`setupRoutes`).
+ * 3. Proxy Pattern: Acts as an intermediary to forward requests to backend services (`proxyOptions`).
+ * 4. Factory Method Pattern: The `formURL` method constructs service URLs dynamically based on baseURL and port.
+ * 5. Middleware Design: Implements error handling and request modification using middleware (`setupErrorHandling` and `proxyReqOptDecorator`).
  */
 
 class APIGateway {
