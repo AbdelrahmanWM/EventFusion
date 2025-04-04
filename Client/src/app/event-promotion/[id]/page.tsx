@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import SocialMediaShare from "../../components/SocialMediaShare";
+import SocialMediaShare from "../../../components/features/Promotion/SocialMediaShare";
 
 const EventDetailPage: React.FC = () => {
   const searchParams = useSearchParams();

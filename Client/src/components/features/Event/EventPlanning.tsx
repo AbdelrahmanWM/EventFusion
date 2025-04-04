@@ -5,13 +5,15 @@ import { Button } from "@/components/ui/button";
 import EventForm from "./EventForm";
 import EventList from "./EventList";
 import { Calendar } from "@/components/ui/calendar";
-import { Event } from "../types/event";
+import { Event } from "../../../app/types/event";
 
 export default function EventPlanning() {
   const [events, setEvents] = useState<Event[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -43,7 +45,7 @@ export default function EventPlanning() {
         await fetch(`/api/events/${eventId}`, {
           method: "DELETE",
         });
-        setEvents(events.filter(event => event.id !== eventId));
+        setEvents(events.filter((event) => event.id !== eventId));
       } catch (error) {
         console.error("Error deleting event:", error);
       }
@@ -52,9 +54,9 @@ export default function EventPlanning() {
 
   const handleSaveEvent = (newEvent: Event) => {
     if (editingEvent) {
-      setEvents(events.map(event => 
-        event.id === newEvent.id ? newEvent : event
-      ));
+      setEvents(
+        events.map((event) => (event.id === newEvent.id ? newEvent : event))
+      );
     } else {
       setEvents([...events, newEvent]);
     }
@@ -65,7 +67,9 @@ export default function EventPlanning() {
   return (
     <main className="max-w-6xl mx-auto p-10">
       <div className="mb-10">
-        <h1 className="text-4xl font-extrabold mb-2">Event Planning & Scheduling</h1>
+        <h1 className="text-4xl font-extrabold mb-2">
+          Event Planning & Scheduling
+        </h1>
         <h2 className="text-2xl">Create and manage your events</h2>
       </div>
 
@@ -77,18 +81,15 @@ export default function EventPlanning() {
             onSelect={setSelectedDate}
             className="rounded-md border"
           />
-          <Button 
-            onClick={handleAddEvent} 
-            className="w-full mt-4"
-          >
+          <Button onClick={handleAddEvent} className="w-full mt-4">
             Create New Event
           </Button>
         </div>
-        
+
         <div className="col-span-1 md:col-span-2">
           {showForm ? (
-            <EventForm 
-              selectedDate={selectedDate} 
+            <EventForm
+              selectedDate={selectedDate}
               event={editingEvent}
               onClose={() => {
                 setShowForm(false);
@@ -97,8 +98,8 @@ export default function EventPlanning() {
               onSave={handleSaveEvent}
             />
           ) : (
-            <EventList 
-              events={events} 
+            <EventList
+              events={events}
               selectedDate={selectedDate}
               onEdit={handleEditEvent}
               onDelete={handleDeleteEvent}

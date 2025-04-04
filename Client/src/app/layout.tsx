@@ -1,8 +1,8 @@
 import type React from "react";
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
-import ModeToggle from "./components/ModeToggle";
+import ModeToggle from "../components/ui/ModeToggle";
+import { ThemeProvider } from "./_app";
 
 const inter = Inter({ subsets: ["latin"] });
 

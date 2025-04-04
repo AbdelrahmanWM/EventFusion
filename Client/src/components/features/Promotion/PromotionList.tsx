@@ -8,7 +8,10 @@ interface PromotionListProps {
   setPromotions: React.Dispatch<React.SetStateAction<Promotion[]>>;
 }
 
-const PromotionList: React.FC<PromotionListProps> = ({ promotions, setPromotions }) => {
+const PromotionList: React.FC<PromotionListProps> = ({
+  promotions,
+  setPromotions,
+}) => {
   // Function to delete an event
   const handleDelete = (id: number) => {
     setPromotions((prev) => prev.filter((promotion) => promotion.id !== id));
