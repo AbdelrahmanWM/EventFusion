@@ -4,14 +4,14 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue 
+  SelectValue,
 } from "@/components/ui/select";
-import { Event } from "../types/event";
+import { Event } from "../../../app/types/event";
 
 interface EventFormProps {
   selectedDate?: Date;
@@ -20,7 +20,12 @@ interface EventFormProps {
   onSave: (event: Event) => void;
 }
 
-export default function EventForm({ selectedDate, event, onClose, onSave }: EventFormProps) {
+export default function EventForm({
+  selectedDate,
+  event,
+  onClose,
+  onSave,
+}: EventFormProps) {
   const [eventData, setEventData] = useState<Event>({
     id: "",
     title: "",
@@ -31,7 +36,7 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
     date: selectedDate || new Date(),
     agenda: "",
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -41,7 +46,9 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
     }
   }, [event]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setEventData({ ...eventData, [name]: value });
   };
@@ -54,11 +61,11 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
-    
+
     try {
       const method = event ? "PUT" : "POST";
       const url = event ? `/api/events/${event.id}` : "/api/events";
-      
+
       const response = await fetch(url, {
         method: method,
         headers: {
@@ -66,15 +73,17 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
         },
         body: JSON.stringify(eventData),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to save event");
       }
-      
+
       const data = await response.json();
       onSave(data.event);
-      
-      alert(event ? "Event updated successfully!" : "Event created successfully!");
+
+      alert(
+        event ? "Event updated successfully!" : "Event created successfully!"
+      );
     } catch (error) {
       console.error("Error saving event:", error);
       setError("Failed to save event. Please try again.");
@@ -85,8 +94,10 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
 
   return (
     <div className="bg-card p-6 rounded-md border">
-      <h3 className="text-xl font-bold mb-4">{event ? "Edit Event" : "Create New Event"}</h3>
-      
+      <h3 className="text-xl font-bold mb-4">
+        {event ? "Edit Event" : "Create New Event"}
+      </h3>
+
       <form onSubmit={handleSubmit}>
         <div className="space-y-4">
           <div>
@@ -101,9 +112,12 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
               required
             />
           </div>
-          
+
           <div>
-            <label htmlFor="description" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium mb-1"
+            >
               Description
             </label>
             <Textarea
@@ -114,7 +128,7 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
               rows={3}
             />
           </div>
-          
+
           <div>
             <label htmlFor="agenda" className="block text-sm font-medium mb-1">
               Agenda
@@ -128,12 +142,12 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
               placeholder="List the schedule and activities for this event"
             />
           </div>
-          
+
           <div>
             <label htmlFor="venue" className="block text-sm font-medium mb-1">
               Venue
             </label>
-            <Select 
+            <Select
               onValueChange={(value) => handleSelectChange("venue", value)}
               defaultValue={eventData.venue}
             >
@@ -141,18 +155,25 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
                 <SelectValue placeholder="Select venue" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="conference-room-a">Conference Room A</SelectItem>
-                <SelectItem value="conference-room-b">Conference Room B</SelectItem>
+                <SelectItem value="conference-room-a">
+                  Conference Room A
+                </SelectItem>
+                <SelectItem value="conference-room-b">
+                  Conference Room B
+                </SelectItem>
                 <SelectItem value="main-hall">Main Hall</SelectItem>
                 <SelectItem value="outdoor-space">Outdoor Space</SelectItem>
                 <SelectItem value="custom">Custom Venue</SelectItem>
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="startTime" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="startTime"
+                className="block text-sm font-medium mb-1"
+              >
                 Start Time
               </label>
               <Input
@@ -164,9 +185,12 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
                 required
               />
             </div>
-            
+
             <div>
-              <label htmlFor="endTime" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="endTime"
+                className="block text-sm font-medium mb-1"
+              >
                 End Time
               </label>
               <Input
@@ -179,19 +203,23 @@ export default function EventForm({ selectedDate, event, onClose, onSave }: Even
               />
             </div>
           </div>
-          
+
           {error && (
             <div className="bg-red-100 text-red-600 p-2 rounded-md">
               {error}
             </div>
           )}
-          
+
           <div className="flex justify-end space-x-2 pt-4">
             <Button variant="outline" type="button" onClick={onClose}>
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : event ? "Update Event" : "Save Event"}
+              {isSubmitting
+                ? "Saving..."
+                : event
+                ? "Update Event"
+                : "Save Event"}
             </Button>
           </div>
         </div>

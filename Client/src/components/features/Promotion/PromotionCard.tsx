@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-import EventPromotionImg from "../../public/images/event-promotion.png"
+import EventPromotionImg from "../../../public/images/event-promotion.png"
 import Image from "next/image";
 
 export interface Promotion {
