@@ -5,6 +5,6 @@ export interface IStorageService {
      * @param variable 
      */
     loadVariable(variable: string):string;
-    setVariable(variable: string, value: String): void;
+    setVariable(variable: string, value: string): void;
 
 }

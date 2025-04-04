@@ -3,7 +3,7 @@ import express, { Application, Request, Response, NextFunction } from "express";
 import proxy, { ProxyOptions } from "express-http-proxy";
 import { sendErrorResponse } from "shared/utilities/Response";
 import * as http from "http"; // Importing http to get RequestOptions
-
+import cors from "cors"
 /**
  * APIGateway Class Design Patterns:
  * 1. Singleton Pattern: Ensures that only one instance of the gateway is created (static `getInstance` method).
@@ -21,6 +21,7 @@ class APIGateway {
   private constructor(config: Config) {
     this.app = express();
     this.config = config;
+    this.setupMiddleware();
     this.setupRoutes();
     this.setupErrorHandling();
   }
@@ -31,7 +32,9 @@ class APIGateway {
     }
     return APIGateway.instance;
   }
-
+  private setupMiddleware(){
+    this.app.use(cors());
+  }
   private setupRoutes() {
     try {
       const baseURL = this.config.getBaseURL();
