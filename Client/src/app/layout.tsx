@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import ModeToggle from "../components/ui/ModeToggle";
 import { ThemeProvider } from "./_app";
 import { ServicesClientContextProvider } from "@/contexts/ServicesClientContext";
+import Header from "@/components/ui/header";
+import { Footer } from "@/components/ui/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -27,7 +29,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+    <div className='flex flex-col min-h-screen transition-all`'>
+          <Header/>
           {children}
+          <Footer/>
+          </div>
           <div className="fixed bottom-5 left-16">
             <ModeToggle />
           </div>
