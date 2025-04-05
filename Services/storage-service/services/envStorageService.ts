@@ -25,7 +25,7 @@ export class DotenvStorageService implements IStorageService {
     }
     return envVariable;
   }
-  setVariable(variable: string, value: String): void {
+  setVariable(variable: string, value: string): void {
     const envContent = fs.readFileSync(this.envFilePath, "utf8");
     const regex = new RegExp(`^${variable}=[^\r\n]*`, "m");
     if (regex.test(envContent)) {

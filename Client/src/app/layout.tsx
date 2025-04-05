@@ -3,7 +3,7 @@ import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import ModeToggle from "../components/ui/ModeToggle";
 import { ThemeProvider } from "./_app";
-
+import { ServicesClientContextProvider } from "@/contexts/ServicesClientContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -20,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className}`}>
+        <ServicesClientContextProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -31,6 +32,7 @@ export default function RootLayout({
             <ModeToggle />
           </div>
         </ThemeProvider>
+        </ServicesClientContextProvider>
       </body>
     </html>
   );

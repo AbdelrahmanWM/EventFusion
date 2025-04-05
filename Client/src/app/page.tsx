@@ -1,6 +1,8 @@
+"use client"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 import {
   Calendar,
   Users,
@@ -14,8 +16,16 @@ import {
 } from "lucide-react"
 
 import Hero from "../public/images/hero.png"
+import { useEffect } from "react"
 
 export default function HomePage() {
+  const router = useRouter();
+  useEffect(()=>{
+  if(!localStorage.getItem("auth_token")){
+    router.push("/login")
+  }
+  },[router])
+
   return (
     <div className='flex flex-col min-h-screen transition-all`'>
       {/* Header */}
@@ -41,9 +51,11 @@ export default function HomePage() {
           </nav>
           <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center gap-4">
+              <Link href="login">
               <Button variant="outline" size="sm">
                 Log in
               </Button>
+              </Link>
               <Button size="sm">Sign up</Button>
             </div>
           </div>
