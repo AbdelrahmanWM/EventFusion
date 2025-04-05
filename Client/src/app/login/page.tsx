@@ -18,7 +18,10 @@ export default function LoginForm() {
 
       if (!response.error) {
         localStorage.setItem("auth_token", response.data.token);
+        localStorage.setItem("username", username); // Store username in local storage
 
+        // ✅ Fire auth-changed event so Header updates
+        window.dispatchEvent(new Event("auth-changed"));
         console.log("Login successful!");
         router.push("/")
         console.log(response.data); 
