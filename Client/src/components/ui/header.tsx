@@ -31,7 +31,9 @@ export default function Header(){
         Log in
       </Button>
       </Link>
+      <Link href="register">
       <Button size="sm">Sign up</Button>
+      </Link>
     </div>
   </div>
 </div>
