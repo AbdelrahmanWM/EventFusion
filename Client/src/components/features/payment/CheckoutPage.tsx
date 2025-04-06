@@ -7,6 +7,7 @@ import {
 } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
 
+
 export default function CheckoutPage({ amount }: { amount: number }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -16,7 +17,7 @@ export default function CheckoutPage({ amount }: { amount: number }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("/api/create-payment-intent", {
+    fetch("http://localhost:5004/api/payment/create-payment-intent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
