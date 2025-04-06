@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "user-service": "tsx --watch ./user-service/app/main.ts",
     "role-service": "tsx --watch ./role-service/app/main.ts",
+    "payment-service": "tsx --watch ./payment-service/app/main.ts",
     "dev": "tsx --watch ./main.ts"
   },
   "keywords": [],
@@ -38,6 +39,7 @@
     "mongoose": "^8.13.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "stripe": "^18.0.0",
     "tsx": "^4.19.3"
   }
 }
