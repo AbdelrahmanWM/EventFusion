@@ -17,23 +17,29 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const servicesClient = useServicesClient();
 
   useEffect(() => {
-    async function checkToken() {
-      const token = TokenUtility.getToken();
-      if (!token) {
-        router.push("/login");
-        return;
-      }
-      const response = await servicesClient.verifyToken(token);
-      if (response.error) {
-        TokenUtility.removeToken();
-        router.push("/login");
-      } else {
-        setToken(TokenUtility.getToken());
-        setUser(TokenUtility.getDecodedToken());
-      }
-    }
-    checkToken();
-  }, [servicesClient, router]);
+        const interval = setInterval(async () => {
+          const token = TokenUtility.getToken();
+          if (!token) {
+            router.push("/login");
+            clearInterval(interval);
+            return;
+          }
+          const validToken = await servicesClient.verifyToken(token);
+          if (!validToken) {
+            console.log("Invalid")
+            TokenUtility.removeToken();
+            router.push("/login");
+            clearInterval(interval); 
+          } else {
+            console.log("valid")
+            setToken(TokenUtility.getToken());
+            setUser(TokenUtility.getDecodedToken());
+          }
+        }, 1000);
+    
+        return () => clearInterval(interval); 
+    
+  });
 
   return (
     <UserContext.Provider value={{ token, user }}>

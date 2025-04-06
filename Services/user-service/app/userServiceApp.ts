@@ -1,10 +1,11 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response,NextFunction } from "express";
 import Config from "../config/config";
 import cors from "cors";
 import PassportJWTStrategy from "../strategies/jwtStrategy";
 import UserRouter from "../routes/userRoute";
 import AuthRouter from "../routes/authRoute";
 import ConsoleLoggerService from "../../logger-service/services/consoleLoggerService";
+import { sendErrorResponse } from "shared/utilities/Response";
 
 class UserServiceApp {
   private static instance: UserServiceApp;
@@ -32,6 +33,7 @@ class UserServiceApp {
     // Initializing middleware and routes
     this.initializeMiddleware();
     this.initializeRoutes();
+    this.setupErrorHandling();
   }
 
   public static getInstance(
@@ -58,6 +60,14 @@ class UserServiceApp {
   private initializeRoutes(): void {
     this.app.use("/authenticate", this.authRouter.getRouter());
     this.app.use("/", this.userRouter.getRouter());
+  }
+  private setupErrorHandling() {
+    this.app.use(
+      (err: Error, req: Request, res: Response, next: NextFunction) => {
+        console.error("Internal server error:", err);
+        sendErrorResponse(res, "Internal server Error", err, 500);
+      }
+    );
   }
   public start(): void {
     this.app.listen(this.port, () => {

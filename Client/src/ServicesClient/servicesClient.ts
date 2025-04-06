@@ -28,7 +28,6 @@ class ServiceClient {
           ...headers,
         },
       });
-
       if (!response.ok) {
         throw new Error(`Failed to fetch from ${endpoint}`);
       }
@@ -116,8 +115,20 @@ class ServiceClient {
   public async login(username: string, password: string) {
     return await this.post("/users/authenticate/login", { username, password });
   }
-  public async verifyToken(jsonWebToken: string){
-    return await this.get("/users/authenticate/verifyToken",ServiceClient.getAuthHeaders(jsonWebToken));
+  public async verifyToken(jsonWebToken: string): Promise<boolean> {
+    try {
+      const response = await this.get(
+        "/users/authenticate/verifyToken",
+        ServiceClient.getAuthHeaders(jsonWebToken)
+      );
+      if ( response.error) {
+        return false;
+      }
+      return true;
+    } catch (error: any) {
+      console.log(error);
+      return false;
+    }
   }
 
   // User Service Endpoints
