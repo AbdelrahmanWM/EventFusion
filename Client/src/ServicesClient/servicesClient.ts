@@ -116,6 +116,9 @@ class ServiceClient {
   public async login(username: string, password: string) {
     return await this.post("/users/authenticate/login", { username, password });
   }
+  public async verifyToken(jsonWebToken: string){
+    return await this.get("/users/authenticate/verifyToken",ServiceClient.getAuthHeaders(jsonWebToken));
+  }
 
   // User Service Endpoints
   public async getUserByUsername(username: string, jsonWebToken: string) {

@@ -48,4 +48,7 @@ export class AuthController {
       sendErrorResponse(res, "Failed to login user.", error.message, 404);
     }
   };
+  public verifyToken=async(req:Request,res:Response)=>{
+    return sendSuccessResponse(res,"Valid token",{},200);
+  }
 }
