@@ -7,7 +7,8 @@
     "user-service": "tsx --watch ./user-service/app/main.ts",
     "role-service": "tsx --watch ./role-service/app/main.ts",
     "payment-service": "tsx --watch ./payment-service/app/main.ts",
-    "dev": "tsx --watch ./main.ts"
+    "gateway": "tsx --watch ./main.ts",
+    "dev": "concurrently \"npm run gateway\" \"npm run user-service\" \"npm run role-service\" \"npm run payment-service\""
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "@types/express-http-proxy": "^1.6.6",
     "babel-jest": "^29.7.0",
     "bcryptjs": "^3.0.2",
+    "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
