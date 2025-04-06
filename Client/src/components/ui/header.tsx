@@ -3,32 +3,31 @@ import { GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./button";
 import { useEffect, useState } from "react";
-import TokenDecoder, { MyTokenPayload } from "@/ServicesClient/tokenDecoder";
+import TokenUtility, { MyTokenPayload } from "@/ServicesClient/tokenUtility";
 import dotenv from "dotenv";
 import AccountMenu from "./accountMenu";
 dotenv.config();
 
 export default function Header() {
   const [showButton, setShowButton] = useState(false);
-  const [username, setUsername] = useState<string | null>(null);
+  const [username, setUsername] = useState<string>("");
   const [showAccount, setShowAccount] = useState(false);
 
   const checkAuth = () => {
-    const token = localStorage.getItem("auth_token");
+    const tokenExists = TokenUtility.exists();
 
-    if (!token) {
+    if (!tokenExists) {
       setShowButton(true);
-      setUsername(null);
+      setUsername("");
     } else {
       const verifiedToken: MyTokenPayload | null =
-        TokenDecoder.decodeToken(token);
+        TokenUtility.getDecodedToken();
       if (!verifiedToken) {
         setShowButton(true);
-        setUsername(null);
+        setUsername("");
       } else {
         setUsername(verifiedToken.username);
         setShowButton(false);
-
       }
     }
   };
@@ -81,7 +80,11 @@ export default function Header() {
             </div>
           </div>
         ) : (
-           <AccountMenu username={username} isMenuOpen={showAccount} setIsMenuOpen={setShowAccount} />
+          <AccountMenu
+            username={username}
+            isMenuOpen={showAccount}
+            setIsMenuOpen={setShowAccount}
+          />
         )}
       </div>
     </header>

@@ -2,33 +2,26 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+
 import {
   Calendar,
   Users,
   MessageSquare,
   Megaphone,
-  FolderArchive,
   BarChart,
   CreditCard,
   ArrowRight,
- } from "lucide-react"
+} from "lucide-react";
 
 import Hero from "../public/images/hero.png";
-import { useEffect } from "react";
+
 
 export default function HomePage() {
-  const router = useRouter();
-  useEffect(() => {
-    if (!localStorage.getItem("auth_token")) {
-      router.push("/login");
-    }
-  }, [router]);
+  
 
   return (
-     
-      <>
-       <main className="flex-1">
+    <>
+      <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-muted">
           <div className="container mx-auto px-4 md:px-6">
@@ -130,11 +123,12 @@ export default function HomePage() {
                   engagement, and feedback.
                 </p>
               </div>
-              <Link href={"/payment"} className="flex flex-col items-center space-y-2 rounded-lg border p-6">
+              <Link
+                href={"/payment"}
+                className="flex flex-col items-center space-y-2 rounded-lg border p-6"
+              >
                 <CreditCard className="h-12 w-12 text-primary" />
-                <h3 className="text-xl font-bold">
-                  Payment & Financial
-                </h3>
+                <h3 className="text-xl font-bold">Payment & Financial</h3>
                 <p className="text-center text-muted-foreground">
                   Secure payment gateways, sponsorship tracking, and budget
                   management tools for financial transparency.
@@ -287,7 +281,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-     
-      </>
-   )
+    </>
+  );
 }

@@ -32,7 +32,10 @@ export default class Setup {
       userService,
       authService
     );
-    const authRouter: AuthRouter = AuthRouter.getInstance(authController);
+    const authRouter: AuthRouter = AuthRouter.getInstance(
+      authController,
+      authenticateJWT
+    );
     const mongoDB: MongoDB = await MongoDB.getInstance(storageService);
     return { config, passportJWTStrategy, userRouter, authRouter };
   }
