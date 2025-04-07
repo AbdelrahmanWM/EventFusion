@@ -14,7 +14,7 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const router = useRouter();
   const [user, setUser] = useState<MyTokenPayload | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const servicesClient = useServicesClient();
+//   const servicesClient = useServicesClient();
 
   useEffect(() => {
         const interval = setInterval(async () => {
@@ -24,18 +24,18 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
             clearInterval(interval);
             return;
           }
-          const validToken = await servicesClient.verifyToken(token);
-          if (!validToken) {
-            console.log("Invalid")
-            TokenUtility.removeToken();
-            router.push("/login");
-            clearInterval(interval); 
-          } else {
-            console.log("valid")
-            setToken(TokenUtility.getToken());
-            setUser(TokenUtility.getDecodedToken());
-          }
-        }, 1000);
+        //   const validToken = await servicesClient.verifyToken(token);
+        //   if (!validToken) {
+        //     console.log("Invalid")
+        //     TokenUtility.removeToken();
+        //     router.push("/login");
+        //     clearInterval(interval); 
+        //   } else {
+        //     console.log("valid")
+        //     setToken(TokenUtility.getToken());
+        //     setUser(TokenUtility.getDecodedToken());
+        //   }
+        }, 30000);
     
         return () => clearInterval(interval); 
     
