@@ -3,6 +3,8 @@ import { IRole } from "./IRole";
 
 export interface IRoleService {
   fetchRolesByEvent(eventID: string): Promise<IRole[]>;
+  fetchRolesByUser(userID: string): Promise<IRole[]>;
+
   fetchUserRolesByEvent(userID: string, eventID: string): Promise<IRole>;
   addRole(roleData: IRole): Promise<IRole>;
   assignRoleToUserByEvent(
