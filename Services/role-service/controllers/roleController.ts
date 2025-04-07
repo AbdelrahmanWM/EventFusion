@@ -38,7 +38,19 @@ export class RoleController {
       sendErrorResponse(res, "Failed to fetch roles list.", error, 500);
     }
   };
-
+  public getRolesByUser = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    const { userID } = req.params;
+    try {
+      const roles: IRole[] = await this.roleService.fetchRolesByEvent(userID);
+      sendSuccessResponse(res, "Successfully fetched roles list.", roles, 200);
+    } catch (error) {
+      sendErrorResponse(res, "Failed to fetch roles list.", error, 500);
+    }
+  };
+  
   public getUserRolesByEvent = async (
     req: Request,
     res: Response

@@ -18,7 +18,7 @@ export class AuthService {
   public generateToken(user: IUser): string {
     // Ensure jwtSecret is a valid string, and token expiration is a valid string or number
     const jwtSecret = this.config.getJwtSecret();
-    const tokenExpiry = "1h";
+    const tokenExpiry = "5h";
 
     const options: SignOptions = {
       expiresIn: tokenExpiry, // can be a string like "1h" or a number like 3600

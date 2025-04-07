@@ -10,11 +10,23 @@ import Roles from "role-service/models/Role";
 class RoleService implements IRoleService {
   static instance: RoleService | null = null;
   private constructor() {}
+
   public static getInstance(): RoleService {
     if (!RoleService.instance) {
       RoleService.instance = new RoleService();
     }
     return RoleService.instance;
+  }
+  async fetchRolesByUser(userID: string): Promise<IRole[]> {
+    try {
+      const roles: IRole[] = await Roles.find({ user: userID });
+      if (roles.length == 0) {
+        throw new Error(`No roles found for user: ${userID}.`);
+      }
+      return roles;
+    } catch (error: any) {
+      throw new Error(`Failed to fetch roles: ${error.message}`);
+    }
   }
   async fetchRolesByEvent(eventID: string): Promise<IRole[]> {
     try {
