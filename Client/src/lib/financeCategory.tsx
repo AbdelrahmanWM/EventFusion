@@ -44,6 +44,5 @@ export const expenseCategories = [
     { name: "Promotional Materials", icon: <Megaphone className="h-4 w-4" /> },
     { name: "Speaker & Guest Fees", icon: <Mic className="h-4 w-4" /> },
     { name: "Sponsorship Deliverables", icon: <Handshake className="h-4 w-4" /> },
-    { name: "Technology & Equipment", icon: <Laptop className="h-4 w-4" /> },
     { name: "Other", icon: <RectangleEllipsis className="h-4 w-4" /> },
   ];
