@@ -2,6 +2,7 @@
 import { incomeCategories } from "@/lib/financeCategory";
 import { expenseCategories } from "@/lib/financeCategory";
 import { useState, useEffect, useCallback } from "react";
+import { timePeriods, COLORS } from "@/lib/financeData";
 import {
   Plus,
   Search,
@@ -11,20 +12,8 @@ import {
   Calendar,
   Trash2,
   Edit2,
-  PieChart,
-  Moon,
-  Sun,
-  Settings,
-  HelpCircle,
   TrendingUp,
   DollarSign,
-  BookOpen,
-  Coffee,
-  Home,
-  ShoppingBag,
-  Handshake,
-  Gift,
-  RectangleEllipsis,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -55,9 +44,6 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Slider } from "@/components/ui/slider";
 import {
   BarChart,
   Bar,
@@ -85,28 +71,6 @@ type Transaction = {
   description: string;
   date: string;
 };
-
-// Define time periods for filtering
-const timePeriods = [
-  "All Time",
-  "This Week",
-  "This Month",
-  "Last Month",
-  "Last 3 Months",
-];
-
-// Colors for charts
-const COLORS = [
-  "#0088FE",
-  "#00C49F",
-  "#FFBB28",
-  "#FF8042",
-  "#8884d8",
-  "#82ca9d",
-  "#ffc658",
-  "#8dd1e1",
-  "#a4de6c",
-];
 
 export default function FinanceTracker() {
   // State for transactions
@@ -366,6 +330,42 @@ export default function FinanceTracker() {
       Income: data.income,
       Expenses: data.expense,
       Balance: data.income - data.expense,
+    }));
+  }, [transactions]);
+
+  // Prepare data for sponsorship chart
+  const prepareMonthlySponsorshipData = useCallback(() => {
+    const monthlyData = new Map<string, number>();
+
+    // Initialize the last 6 months
+    const today = new Date();
+    for (let i = 5; i >= 0; i--) {
+      const month = new Date(today.getFullYear(), today.getMonth() - i, 1);
+      const monthKey =
+        month.toLocaleString("default", { month: "short" }) +
+        " " +
+        month.getFullYear();
+      monthlyData.set(monthKey, 0);
+    }
+
+    // Sum sponsorship incomes for each month
+    transactions
+      .filter((t) => t.type === "income" && t.category === "Sponsorship")
+      .forEach((t) => {
+        const date = new Date(t.date);
+        const monthKey =
+          date.toLocaleString("default", { month: "short" }) +
+          " " +
+          date.getFullYear();
+
+        if (monthlyData.has(monthKey)) {
+          monthlyData.set(monthKey, monthlyData.get(monthKey)! + t.amount);
+        }
+      });
+
+    return Array.from(monthlyData.entries()).map(([name, amount]) => ({
+      name,
+      Sponsorships: amount,
     }));
   }, [transactions]);
 
@@ -1047,7 +1047,7 @@ export default function FinanceTracker() {
                   <CardHeader>
                     <CardTitle>Spending Summary</CardTitle>
                     <CardDescription>
-                      Breakdown of your expenses by category
+                      Breakdown of expenses by category
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1097,7 +1097,7 @@ export default function FinanceTracker() {
                   <CardHeader>
                     <CardTitle>Daily Spending</CardTitle>
                     <CardDescription>
-                      Your expenses over the last 14 days
+                      Expenses over the last 14 days
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="h-[300px]">
@@ -1126,7 +1126,7 @@ export default function FinanceTracker() {
                     <CardHeader>
                       <CardTitle>Top Spending Categories</CardTitle>
                       <CardDescription>
-                        Where most of your money goes
+                        Expenses where the money goes
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -1158,9 +1158,7 @@ export default function FinanceTracker() {
                   <Card>
                     <CardHeader>
                       <CardTitle>Spending Insights</CardTitle>
-                      <CardDescription>
-                        Analysis of your spending habits
-                      </CardDescription>
+                      <CardDescription>Analysis of spendings</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
@@ -1215,7 +1213,7 @@ export default function FinanceTracker() {
                   <CardHeader>
                     <CardTitle>Monthly Balance Trend</CardTitle>
                     <CardDescription>
-                      Your net balance over the last 6 months
+                      Net balance over the last 6 months
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="h-[300px]">
@@ -1357,10 +1355,10 @@ export default function FinanceTracker() {
                             <h3 className="font-medium">Income Stability</h3>
                             <p className="text-muted-foreground mt-1">
                               {Math.abs(calculateTrends().incomeChange) < 10
-                                ? "Your income has been relatively stable over the past months."
+                                ? "Income has been relatively stable over the past months."
                                 : calculateTrends().incomeChange > 0
-                                ? "Your income has increased recently, which is a positive trend."
-                                : "Your income has decreased recently. Consider looking for additional income sources."}
+                                ? "Income has increased recently, which is a positive trend."
+                                : "Income has decreased recently. Consider looking for additional income sources."}
                             </p>
                           </div>
 
@@ -1371,12 +1369,12 @@ export default function FinanceTracker() {
                               calculateTotalExpenses() /
                                 calculateTotalIncome() <
                                 0.7
-                                ? "You're spending less than 70% of your income, which is good financial discipline."
+                                ? "The event has spent less than 70% of the income, which is good financial discipline."
                                 : calculateTotalIncome() > 0 &&
                                   calculateTotalExpenses() /
                                     calculateTotalIncome() <
                                     0.9
-                                ? "You're spending between 70-90% of your income. Try to reduce expenses to save more."
+                                ? "The event has spent between 70-90% of the income. Try to reduce expenses to save more."
                                 : "Your expenses are close to or exceeding your income. Consider creating a stricter budget."}
                             </p>
                           </div>
@@ -1387,22 +1385,11 @@ export default function FinanceTracker() {
                             </h3>
                             <p className="text-muted-foreground mt-1">
                               {prepareCategoryData()[0]
-                                ? `Your highest spending category is ${
+                                ? `The highest spending category is ${
                                     prepareCategoryData()[0].name
                                   } at $${prepareCategoryData()[0].value.toFixed(
                                     2
-                                  )}. ${
-                                    prepareCategoryData()[0].name === "Food" ||
-                                    prepareCategoryData()[0].name ===
-                                      "Groceries"
-                                      ? "This is a necessary expense, but look for ways to optimize costs."
-                                      : prepareCategoryData()[0].name ===
-                                          "Entertainment" ||
-                                        prepareCategoryData()[0].name ===
-                                          "Shopping"
-                                      ? "Consider if you can reduce spending in this discretionary category."
-                                      : "Review if this spending aligns with your financial goals."
-                                  }`
+                                  )}. ${"Review if this spending aligns with your financial goals."}`
                                 : "Add more transactions to see insights about your top spending category."}
                             </p>
                           </div>
@@ -1424,7 +1411,7 @@ export default function FinanceTracker() {
                   <CardHeader>
                     <CardTitle>Budget Health</CardTitle>
                     <CardDescription>
-                      How well you're managing your finances
+                      How well does the event manage its finance
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1530,14 +1517,15 @@ export default function FinanceTracker() {
                                       .filter(
                                         (t) =>
                                           t.type === "expense" &&
-                                          (t.category === "Food" ||
-                                            t.category === "Housing" ||
-                                            t.category === "Transportation" ||
-                                            t.category === "Utilities" ||
-                                            t.category === "Health" ||
-                                            t.category === "Education" ||
-                                            t.category === "Tuition" ||
-                                            t.category === "Textbooks")
+                                          (t.category === "Venue & Setup" ||
+                                            t.category === "Food & Catering" ||
+                                            t.category ===
+                                              "Promotional Materials" ||
+                                            t.category ===
+                                              "Speaker & Guest Fees" ||
+                                            t.category ===
+                                              "Sponsorship Deliverables" ||
+                                            t.category === "Other")
                                       )
                                       .reduce((sum, t) => sum + t.amount, 0) /
                                       calculateTotalExpenses()) *
@@ -1556,14 +1544,11 @@ export default function FinanceTracker() {
                                         .filter(
                                           (t) =>
                                             t.type === "expense" &&
-                                            (t.category === "Food" ||
-                                              t.category === "Housing" ||
-                                              t.category === "Transportation" ||
-                                              t.category === "Utilities" ||
-                                              t.category === "Health" ||
-                                              t.category === "Education" ||
-                                              t.category === "Tuition" ||
-                                              t.category === "Textbooks")
+                                            (t.category === "Venue & Setup" ||
+                                              t.category ===
+                                                "Speaker & Guest Fees" ||
+                                              t.category ===
+                                                "Sponsorship Deliverables")
                                         )
                                         .reduce((sum, t) => sum + t.amount, 0) /
                                         calculateTotalExpenses()) *
@@ -1580,16 +1565,14 @@ export default function FinanceTracker() {
                                     ? 100 -
                                       (filteredTransactions
                                         .filter(
-                                          (t) =>
+                                          (t) => (t) =>
                                             t.type === "expense" &&
-                                            (t.category === "Food" ||
-                                              t.category === "Housing" ||
-                                              t.category === "Transportation" ||
-                                              t.category === "Utilities" ||
-                                              t.category === "Health" ||
-                                              t.category === "Education" ||
-                                              t.category === "Tuition" ||
-                                              t.category === "Textbooks")
+                                            (t.category === "Food & Catering" ||
+                                              t.category ===
+                                                "Promotional Materials" ||
+                                              t.category ===
+                                                "Sponsorship Deliverables" ||
+                                              t.category === "Other")
                                         )
                                         .reduce((sum, t) => sum + t.amount, 0) /
                                         calculateTotalExpenses()) *
@@ -1617,7 +1600,7 @@ export default function FinanceTracker() {
                   <CardHeader>
                     <CardTitle>Budget Recommendations</CardTitle>
                     <CardDescription>
-                      Personalized financial advice based on your data
+                      Personalized financial advice based on event data
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1628,16 +1611,16 @@ export default function FinanceTracker() {
                             0.9 && (
                             <div className="p-4 border border-red-200 bg-red-50 dark:bg-red-950 dark:border-red-800 rounded-lg">
                               <h3 className="font-medium text-red-800 dark:text-red-300">
-                                Reduce Your Expenses
+                                Reduce Expenses
                               </h3>
                               <p className="text-red-700 dark:text-red-400 mt-1">
-                                Your expenses are{" "}
+                                Expenses are{" "}
                                 {(
                                   (calculateTotalExpenses() /
                                     calculateTotalIncome()) *
                                   100
                                 ).toFixed(0)}
-                                % of your income, which is too high. Look for
+                                % of the income, which is too high. Look for
                                 ways to cut back on non-essential spending.
                               </p>
                             </div>
@@ -1650,17 +1633,17 @@ export default function FinanceTracker() {
                             10 && (
                             <div className="p-4 border border-yellow-200 bg-yellow-50 dark:bg-yellow-950 dark:border-yellow-800 rounded-lg">
                               <h3 className="font-medium text-yellow-800 dark:text-yellow-300">
-                                Increase Your Savings
+                                Increase Savings
                               </h3>
                               <p className="text-yellow-700 dark:text-yellow-400 mt-1">
-                                You're only saving{" "}
+                                The event is only saving{" "}
                                 {(
                                   ((calculateTotalIncome() -
                                     calculateTotalExpenses()) /
                                     calculateTotalIncome()) *
                                   100
                                 ).toFixed(0)}
-                                % of your income. Try to increase this to at
+                                % of total income. Try to increase this to at
                                 least 20% for financial security.
                               </p>
                             </div>
@@ -1672,7 +1655,7 @@ export default function FinanceTracker() {
                             0.4 && (
                             <div className="p-4 border border-blue-200 bg-blue-50 dark:bg-blue-950 dark:border-blue-800 rounded-lg">
                               <h3 className="font-medium text-blue-800 dark:text-blue-300">
-                                Diversify Your Spending
+                                Diversify Spending
                               </h3>
                               <p className="text-blue-700 dark:text-blue-400 mt-1">
                                 {prepareCategoryData()[0].name} makes up{" "}
@@ -1681,7 +1664,7 @@ export default function FinanceTracker() {
                                     calculateTotalExpenses()) *
                                   100
                                 ).toFixed(0)}
-                                % of your expenses. Consider if you can balance
+                                % of the expenses. Consider if you can balance
                                 your spending more evenly.
                               </p>
                             </div>
@@ -1699,14 +1682,14 @@ export default function FinanceTracker() {
                                 You're On Track!
                               </h3>
                               <p className="text-green-700 dark:text-green-400 mt-1">
-                                You're saving{" "}
+                                The event is saving{" "}
                                 {(
                                   ((calculateTotalIncome() -
                                     calculateTotalExpenses()) /
                                     calculateTotalIncome()) *
                                   100
                                 ).toFixed(0)}
-                                % of your income, which is excellent. Consider
+                                % of total income, which is excellent. Consider
                                 setting specific financial goals for your
                                 savings.
                               </p>
@@ -1725,17 +1708,17 @@ export default function FinanceTracker() {
             )}
           </TabsContent>
 
-          <TabsContent value="sponsorships">
+          <TabsContent value="sponsorships" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Monthly Balance Trend</CardTitle>
+                <CardTitle>Monthly Sponsorships Balance</CardTitle>
                 <CardDescription>
-                  Your net balance over the last 6 months
+                  Net sponsorship fundings over the last 6 months
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={prepareMonthlyData()}>
+                  <LineChart data={prepareMonthlySponsorshipData()}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
@@ -1745,13 +1728,120 @@ export default function FinanceTracker() {
                     <Legend />
                     <Line
                       type="monotone"
-                      dataKey="Balance"
-                      stroke="#8884d8"
+                      dataKey="Sponsorships"
+                      stroke="#2ad175"
                       activeDot={{ r: 8 }}
                       strokeWidth={2}
                     />
                   </LineChart>
                 </ResponsiveContainer>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Sponsorships History</CardTitle>
+                <CardDescription>
+                  {
+                    transactions.filter(
+                      (t) => t.type === "income" && t.category === "Sponsorship"
+                    ).length
+                  }{" "}
+                  sponsorship transactions found
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ScrollArea className="h-[400px]">
+                  {isLoading ? (
+                    <div className="flex justify-center items-center h-full">
+                      <p>Loading transactions...</p>
+                    </div>
+                  ) : filteredTransactions.length > 0 ? (
+                    <div className="space-y-4">
+                      {transactions
+                        .filter(
+                          (t) =>
+                            t.type === "income" && t.category === "Sponsorship"
+                        )
+                        .map((transaction) => (
+                          <div
+                            key={transaction.id}
+                            className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                          >
+                            <div className="flex items-center gap-4">
+                              <div
+                                className={`p-2 rounded-full bg-green-100 dark:bg-green-900`}
+                              >
+                                <ArrowUpRight className="h-5 w-5 text-green-500" />
+                              </div>
+                              <div>
+                                <p className="font-medium">
+                                  {transaction.description}
+                                </p>
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <Badge
+                                    variant="outline"
+                                    className="flex items-center gap-1"
+                                  >
+                                    {getCategoryIcon(
+                                      transaction.category,
+                                      transaction.type
+                                    )}
+                                    {transaction.category}
+                                  </Badge>
+                                  <span>
+                                    {new Date(
+                                      transaction.date
+                                    ).toLocaleDateString()}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <span className={`font-bold text-green-500`}>
+                                +{transaction.amount.toFixed(2)}
+                              </span>
+                              <div className="flex gap-1">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() =>
+                                    startEditTransaction(transaction)
+                                  }
+                                  aria-label={`Edit ${transaction.description}`}
+                                >
+                                  <Edit2 className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() =>
+                                    deleteTransaction(transaction.id)
+                                  }
+                                  aria-label={`Delete ${transaction.description}`}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-[300px] text-center">
+                      <p className="text-muted-foreground mb-2">
+                        No sponsorships found
+                      </p>
+                      <Button
+                        variant="outline"
+                        onClick={() => setIsAddDialogOpen(true)}
+                      >
+                        <Plus className="mr-2 h-4 w-4" />
+                        Add Your First Sponsorship Transaction
+                      </Button>
+                    </div>
+                  )}
+                </ScrollArea>
               </CardContent>
             </Card>
           </TabsContent>
