@@ -8,8 +8,9 @@
     "role-service": "tsx --watch ./role-service/app/main.ts",
     "payment-service": "tsx --watch ./payment-service/app/main.ts",
     "live-chat-service": "tsx --watch ./live-chat-service/app/main.ts",
+    "institution-service": "tsx --watch ./institution-service/app/main.ts",
     "gateway": "tsx --watch ./main.ts",
-    "dev": "concurrently \"npm run gateway\" \"npm run user-service\" \"npm run role-service\" \"npm run payment-service\" \"npm run live-chat-service\""
+    "dev": "concurrently \"npm run gateway\" \"npm run user-service\" \"npm run role-service\" \"npm run payment-service\" \"npm run live-chat-service\" \"npm run institution-service\""
   },
   "keywords": [],
   "author": "",

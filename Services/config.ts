@@ -78,6 +78,15 @@ class Config {
       throw err;
     }
   }
+    public getInstitutionServicePort(): number {
+    try {
+      const port: string =
+        this.storageService.loadVariable("INSTITUTION_SERVICE_PORT");
+      return parseInt(port);
+    } catch (err: any) {
+      throw err;
+    }
+  }
   public getBaseURL(): string {
     try {
       const baseURL: string = this.storageService.loadVariable("BASE_URL");

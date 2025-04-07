@@ -57,12 +57,14 @@ class APIGateway {
       const roleServiceURL = APIGateway.formURL(baseURL, this.config.getRoleServicePort());
       const paymentServiceURL = APIGateway.formURL(baseURL, this.config.getPaymentServicePort());
       const liveChatServiceURL = APIGateway.formURL(baseURL, this.config.getLiveChatServicePort());
+      const institutionServiceURL = APIGateway.formURL(baseURL,this.config.getInstitutionServicePort());
 
       this.app.use("/users", proxy(userServiceURL, this.proxyOptions));
       this.app.use("/events", proxy(eventServiceURL, this.proxyOptions));
       this.app.use("/roles", proxy(roleServiceURL, this.proxyOptions));
       this.app.use("/payment",proxy(paymentServiceURL,this.proxyOptions));
       this.app.use("/livechat",proxy(liveChatServiceURL,this.proxyOptions));
+      this.app.use("/institutions")
 
     } catch (err: any) {
       console.error("Error setting up routes:", err);
