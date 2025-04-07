@@ -64,7 +64,7 @@ class APIGateway {
       this.app.use("/roles", proxy(roleServiceURL, this.proxyOptions));
       this.app.use("/payment",proxy(paymentServiceURL,this.proxyOptions));
       this.app.use("/livechat",proxy(liveChatServiceURL,this.proxyOptions));
-      this.app.use("/institutions")
+      this.app.use("/institutions",proxy(institutionServiceURL,this.proxyOptions));
 
     } catch (err: any) {
       console.error("Error setting up routes:", err);
