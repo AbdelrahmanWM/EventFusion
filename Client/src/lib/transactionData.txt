@@ -1,0 +1,402 @@
+localStorage.setItem("transactions", JSON.stringify([
+  {
+    "type": "expense",
+    "amount": 1087,
+    "category": "Speaker & Guest Fees",
+    "description": "Guest panel honorarium",
+    "date": "2025-02-20",
+    "id": "expense-1"
+  },
+  {
+    "type": "income",
+    "amount": 1713,
+    "category": "Other",
+    "description": "Side project income",
+    "date": "2024-12-13",
+    "id": "income-2"
+  },
+  {
+    "type": "income",
+    "amount": 700,
+    "category": "Reimbursement",
+    "description": "Catering refund",
+    "date": "2025-03-02",
+    "id": "income-3"
+  },
+  {
+    "type": "expense",
+    "amount": 3011,
+    "category": "Speaker & Guest Fees",
+    "description": "Guest panel honorarium",
+    "date": "2024-12-02",
+    "id": "expense-4"
+  },
+  {
+    "type": "expense",
+    "amount": 1672,
+    "category": "Other",
+    "description": "Service fee received",
+    "date": "2024-11-27",
+    "id": "expense-5"
+  },
+  {
+    "type": "income",
+    "amount": 3009,
+    "category": "Event Ticket Sales",
+    "description": "Regular ticket sales",
+    "date": "2025-01-21",
+    "id": "income-6"
+  },
+  {
+    "type": "expense",
+    "amount": 3090,
+    "category": "Sponsorship Deliverables",
+    "description": "Custom merch for sponsors",
+    "date": "2024-11-12",
+    "id": "expense-7"
+  },
+  {
+    "type": "expense",
+    "amount": 593,
+    "category": "Venue & Setup",
+    "description": "Stage setup",
+    "date": "2025-01-29",
+    "id": "expense-8"
+  },
+  {
+    "type": "income",
+    "amount": 4396,
+    "category": "Reimbursement",
+    "description": "Catering refund",
+    "date": "2024-11-06",
+    "id": "income-9"
+  },
+  {
+    "type": "income",
+    "amount": 2176,
+    "category": "Event Ticket Sales",
+    "description": "Regular ticket sales",
+    "date": "2025-02-03",
+    "id": "income-10"
+  },
+  {
+    "type": "income",
+    "amount": 4460,
+    "category": "Donations",
+    "description": "Student group contribution",
+    "date": "2024-11-07",
+    "id": "income-11"
+  },
+  {
+    "type": "income",
+    "amount": 4126,
+    "category": "Sponsorship",
+    "description": "Bronze sponsor from Startup Inc",
+    "date": "2025-03-13",
+    "id": "income-12"
+  },
+  {
+    "type": "expense",
+    "amount": 1629,
+    "category": "Speaker & Guest Fees",
+    "description": "Guest panel honorarium",
+    "date": "2025-04-24",
+    "id": "expense-13"
+  },
+  {
+    "type": "expense",
+    "amount": 1684,
+    "category": "Promotional Materials",
+    "description": "Flyers and posters",
+    "date": "2024-12-23",
+    "id": "expense-14"
+  },
+  {
+    "type": "income",
+    "amount": 4335,
+    "category": "Other",
+    "description": "Service fee received",
+    "date": "2024-12-25",
+    "id": "income-15"
+  },
+  {
+    "type": "expense",
+    "amount": 3192,
+    "category": "Venue & Setup",
+    "description": "Hall booking",
+    "date": "2025-04-20",
+    "id": "expense-16"
+  },
+  {
+    "type": "expense",
+    "amount": 1566,
+    "category": "Food & Catering",
+    "description": "Lunch for event",
+    "date": "2024-12-09",
+    "id": "expense-17"
+  },
+  {
+    "type": "expense",
+    "amount": 126,
+    "category": "Sponsorship Deliverables",
+    "description": "Swag packs",
+    "date": "2025-03-18",
+    "id": "expense-18"
+  },
+  {
+    "type": "income",
+    "amount": 4871,
+    "category": "Sponsorship",
+    "description": "Community sponsor funds",
+    "date": "2024-11-11",
+    "id": "income-19"
+  },
+  {
+    "type": "expense",
+    "amount": 3842,
+    "category": "Speaker & Guest Fees",
+    "description": "Guest panel honorarium",
+    "date": "2025-02-20",
+    "id": "expense-20"
+  },
+  {
+    "type": "expense",
+    "amount": 3280,
+    "category": "Other",
+    "description": "Workshop revenue",
+    "date": "2024-11-13",
+    "id": "expense-21"
+  },
+  {
+    "type": "income",
+    "amount": 3637,
+    "category": "Other",
+    "description": "Side project income",
+    "date": "2025-01-25",
+    "id": "income-22"
+  },
+  {
+    "type": "expense",
+    "amount": 3570,
+    "category": "Other",
+    "description": "Side project income",
+    "date": "2025-01-13",
+    "id": "expense-23"
+  },
+  {
+    "type": "expense",
+    "amount": 3516,
+    "category": "Speaker & Guest Fees",
+    "description": "Keynote speaker",
+    "date": "2025-03-19",
+    "id": "expense-24"
+  },
+  {
+    "type": "expense",
+    "amount": 1846,
+    "category": "Other",
+    "description": "Side project income",
+    "date": "2025-02-01",
+    "id": "expense-25"
+  },
+  {
+    "type": "income",
+    "amount": 4902,
+    "category": "Reimbursement",
+    "description": "Rental reimbursement",
+    "date": "2025-02-25",
+    "id": "income-26"
+  },
+  {
+    "type": "expense",
+    "amount": 3023,
+    "category": "Venue & Setup",
+    "description": "Chair and table rental",
+    "date": "2025-01-08",
+    "id": "expense-27"
+  },
+  {
+    "type": "income",
+    "amount": 1390,
+    "category": "Merchandise Sales",
+    "description": "Sold T-shirts",
+    "date": "2024-11-08",
+    "id": "income-28"
+  },
+  {
+    "type": "expense",
+    "amount": 3206,
+    "category": "Other",
+    "description": "Workshop revenue",
+    "date": "2024-11-23",
+    "id": "expense-29"
+  },
+  {
+    "type": "expense",
+    "amount": 3597,
+    "category": "Speaker & Guest Fees",
+    "description": "Guest panel honorarium",
+    "date": "2025-02-14",
+    "id": "expense-30"
+  },
+    {
+    "type": "income",
+    "amount": 1958,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from TechNova",
+    "date": "2025-02-02",
+    "id": "sponsorship-1"
+  },
+  {
+    "type": "income",
+    "amount": 5160,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from CodeCraft",
+    "date": "2024-11-21",
+    "id": "sponsorship-2"
+  },
+  {
+    "type": "income",
+    "amount": 4850,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from ByteForce",
+    "date": "2024-11-02",
+    "id": "sponsorship-3"
+  },
+  {
+    "type": "income",
+    "amount": 5105,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from DevSpark",
+    "date": "2025-02-22",
+    "id": "sponsorship-4"
+  },
+  {
+    "type": "income",
+    "amount": 5763,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from AlgoWorks",
+    "date": "2025-01-13",
+    "id": "sponsorship-5"
+  },
+  {
+    "type": "income",
+    "amount": 2210,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from CyberNest",
+    "date": "2024-12-09",
+    "id": "sponsorship-6"
+  },
+  {
+    "type": "income",
+    "amount": 5404,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from InnovateX",
+    "date": "2024-12-23",
+    "id": "sponsorship-7"
+  },
+  {
+    "type": "income",
+    "amount": 3267,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from NextGenTech",
+    "date": "2024-12-23",
+    "id": "sponsorship-8"
+  },
+  {
+    "type": "income",
+    "amount": 4681,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from QuantumSoft",
+    "date": "2025-02-08",
+    "id": "sponsorship-9"
+  },
+  {
+    "type": "income",
+    "amount": 5333,
+    "category": "Sponsorship",
+    "description": "Sponsorship funding from FusionEdge",
+    "date": "2024-12-21",
+    "id": "sponsorship-10"
+  },
+    {
+    "type": "expense",
+    "amount": 1018,
+    "category": "Speaker & Guest Fees",
+    "description": "Workshop leader fee",
+    "date": "2025-03-06",
+    "id": "marapr-expense-1"
+  },
+  {
+    "type": "expense",
+    "amount": 1797,
+    "category": "Food & Catering",
+    "description": "Refreshments and snacks",
+    "date": "2025-04-10",
+    "id": "marapr-expense-2"
+  },
+  {
+    "type": "expense",
+    "amount": 2680,
+    "category": "Other",
+    "description": "Workshop revenue",
+    "date": "2025-03-25",
+    "id": "marapr-expense-3"
+  },
+  {
+    "type": "expense",
+    "amount": 1574,
+    "category": "Speaker & Guest Fees",
+    "description": "Workshop leader fee",
+    "date": "2025-03-28",
+    "id": "marapr-expense-4"
+  },
+  {
+    "type": "expense",
+    "amount": 738,
+    "category": "Venue & Setup",
+    "description": "Stage setup",
+    "date": "2025-03-08",
+    "id": "marapr-expense-5"
+  },
+    {
+    "type": "expense",
+    "amount": 738,
+    "category": "Venue & Setup",
+    "description": "Stage setup",
+    "date": "2025-04-08",
+    "id": "marapr-expense-6"
+  },
+    {
+    "type": "expense",
+    "amount": 738,
+    "category": "Venue & Setup",
+    "description": "Stage setup",
+    "date": "2025-04-12",
+    "id": "marapr-expense-7"
+  },
+    {
+    "type": "expense",
+    "amount": 738,
+    "category": "Venue & Setup",
+    "description": "Stage setup",
+    "date": "2025-04-06",
+    "id": "marapr-expense-8"
+  },
+    {
+    "type": "expense",
+    "amount": 738,
+    "category": "Venue & Setup",
+    "description": "Stage setup",
+    "date": "2025-04-04",
+    "id": "marapr-expense-9"
+  },
+    {
+    "type": "expense",
+    "amount": 738,
+    "category": "Venue & Setup",
+    "description": "Stage setup",
+    "date": "2025-04-01",
+    "id": "marapr-expense-10"
+  }
+]));

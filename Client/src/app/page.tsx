@@ -15,10 +15,7 @@ import {
 
 import Hero from "../public/images/hero.png";
 
-
 export default function HomePage() {
-  
-
   return (
     <>
       <main className="flex-1">
@@ -115,16 +112,19 @@ export default function HomePage() {
                   event pages.
                 </p>
               </Link>
-              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6">
+              <Link
+                href={"/analytics"}
+                className="flex flex-col items-center space-y-2 rounded-lg border p-6"
+              >
                 <BarChart className="h-12 w-12 text-primary" />
                 <h3 className="text-xl font-bold">Analytics & Reporting</h3>
                 <p className="text-center text-muted-foreground">
                   Real-time insights into registration trends, session
                   engagement, and feedback.
                 </p>
-              </div>
+              </Link>
               <Link
-                href={"/payment"}
+                href={"/finance-management"}
                 className="flex flex-col items-center space-y-2 rounded-lg border p-6"
               >
                 <CreditCard className="h-12 w-12 text-primary" />
