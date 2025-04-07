@@ -1,7 +1,9 @@
 import { EventFormat } from "event-service/enums/eventFormat";
 import { EventType } from "event-service/enums/eventType";
+import { Document } from "mongoose";
+import { ISession } from "./ISession";
 
-export interface IEvent {
+export interface IEvent extends Document{
     title: string;
     summary: string;// summary
     aboutTheEvent: string[];
@@ -16,10 +18,7 @@ export interface IEvent {
         timezone:string
     };
     location: string;
-    agenda:Array<{
-        session:string,startTime:string, endTime:string,speakers:string[],
-        agenda: string
-    }>;
+    agenda:Array<ISession>;
     streamLink:string,
     venueInformation: string,
     // for the scoreboards store them in their own service
@@ -34,6 +33,5 @@ export interface IEvent {
         price:number;
     }
     promos:{name:string, discount:number}[];
-    polls:string[];//reference to event polls
-    stakeholders: string[];
+    // stakeholders: string[];
 }
