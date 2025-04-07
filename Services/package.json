@@ -7,8 +7,10 @@
     "user-service": "tsx --watch ./user-service/app/main.ts",
     "role-service": "tsx --watch ./role-service/app/main.ts",
     "payment-service": "tsx --watch ./payment-service/app/main.ts",
+    "live-chat-service": "tsx --watch ./live-chat-service/app/main.ts",
+    "institution-service": "tsx --watch ./institution-service/app/main.ts",
     "gateway": "tsx --watch ./main.ts",
-    "dev": "concurrently \"npm run gateway\" \"npm run user-service\" \"npm run role-service\" \"npm run payment-service\""
+    "dev": "concurrently \"npm run gateway\" \"npm run user-service\" \"npm run role-service\" \"npm run payment-service\" \"npm run live-chat-service\" \"npm run institution-service\""
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",
     "@types/cors": "^2.8.17",
+    "@types/http-proxy": "^1.17.16",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.14",
     "@types/passport": "^1.0.17",
@@ -37,10 +40,12 @@
     "express": "^4.21.2",
     "express-http-proxy": "^2.1.1",
     "http-errors": "^2.0.0",
+    "http-proxy": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "socket.io": "^4.8.1",
     "stripe": "^18.0.0",
     "tsx": "^4.19.3"
   }
