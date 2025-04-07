@@ -1,43 +1,50 @@
-import { EventFormat } from "event-service/enums/eventFormat";
-import { EventType } from "event-service/enums/EventType";
-import { IEvent } from "event-service/interfaces/IEvent";
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import { IEvent } from "../interfaces/IEvent";
 
-interface IEventDocument extends IEvent, Document {}
-
-const EventSchema: Schema = new Schema(
-  {
-    title: { type: String, required: true },
-    description: String,
-    type: { type: String, required: true, enum: Object.values(EventType) },
-    format: { type: String, required: true, enum: Object.values(EventFormat) },
-    date_time: {
-      start: Date,
-      end: Date,
-      timezone: String,
-    },
-    location: String,
-    agenda: [
-      {
-        session: String,
-        time: Date,
-        speaker: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Referencing Speaker
-      },
-    ],
-    registration: {
-      period_start: Date,
-      period_end: Date,
-    },
-    stakeholders: [String],
-    analytics: {
-      total_registered: Number,
-    },
+const EventSchema: Schema = new Schema({
+  title: { type: String, required: true },
+  summary: { type: String, required: true },
+  aboutTheEvent: { type: [String], required: true },
+  description: { type: String, required: true },
+  tags: { type: [String], required: true },
+  type: { type: String, required: true },
+  format: { type: String, required: true },
+  date_time: {
+    start: { type: Date, required: true },
+    end: { type: Date, required: true },
+    timezone: { type: String, required: true },
   },
-  { timestamps: true }
-);
+  location: { type: String, required: true },
+  agenda: [
+    {
+      title: { type: String, required: true },
+      startTime: { type: String, required: true },
+      endTime: { type: String, required: true },
+      speakers: { type: [String], required: true },
+      agenda: { type: String, required: true },
+    },
+  ],
+  streamLink: { type: String, required: false },
+  venueInformation: { type: String, required: false },
+  eventChat: { type: String, required: true }, // Reference to event chat
+  registration: {
+    period_start: { type: Date, required: true },
+    period_end: { type: Date, required: true },
+  },
+  tickets: [
+    {
+      name: { type: String, required: true },
+      price: { type: Number, required: true },
+    },
+  ],
+  promos: [
+    {
+      name: { type: String, required: true },
+      discount: { type: Number, required: true },
+    },
+  ]
+});
 
-const Event: Model<IEventDocument> = mongoose.model<IEventDocument>(
-  "Event",
-  EventSchema
-);
-export default Event;
+const EventModel = mongoose.model<IEvent>("Event", EventSchema);
+
+export default EventModel;

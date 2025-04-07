@@ -22,6 +22,7 @@ export default class RoleRouter {
 
   private bindRoutes(): void {
     this.router.get("/:eventID", this.roleController.getRolesByEvent);
+    this.router.get("/users/:userID", this.roleController.getRolesByUser);
     this.router.get(
       "/:eventID/users/:userID",
       this.roleController.getUserRolesByEvent

@@ -59,6 +59,34 @@ class Config {
     }
   }
   
+  public getPaymentServicePort(): number {
+    try {
+      const port: string =
+        this.storageService.loadVariable("PAYMENT_SERVICE_PORT");
+      return parseInt(port);
+    } catch (err: any) {
+      throw err;
+    }
+  }
+
+  public getLiveChatServicePort(): number {
+    try {
+      const port: string =
+        this.storageService.loadVariable("LIVE_CHAT_SERVICE_PORT");
+      return parseInt(port);
+    } catch (err: any) {
+      throw err;
+    }
+  }
+    public getInstitutionServicePort(): number {
+    try {
+      const port: string =
+        this.storageService.loadVariable("INSTITUTION_SERVICE_PORT");
+      return parseInt(port);
+    } catch (err: any) {
+      throw err;
+    }
+  }
   public getBaseURL(): string {
     try {
       const baseURL: string = this.storageService.loadVariable("BASE_URL");
