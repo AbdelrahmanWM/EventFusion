@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "user-service": "tsx --watch ./user-service/app/main.ts",
     "role-service": "tsx --watch ./role-service/app/main.ts",
-    "payment-service": "tsx --watch ./payment-service/app/main.ts",
+    "payment-service": "tsx ./payment-service/app/main.ts",
     "live-chat-service": "tsx --watch ./live-chat-service/app/main.ts",
     "institution-service": "tsx --watch ./institution-service/app/main.ts",
     "gateway": "tsx --watch ./main.ts",
