@@ -37,7 +37,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
         onClick={toggleMenu}
         className="flex items-center space-x-2 py-2 px-4 bg-primary rounded-md hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary"
       >
-        <div className="flex items-center gap-2 font-bold">
+        <div className="flex items-center gap-2 font-semibold tracking-wide">
           Welcome{username ? `, ${username}!` : "!"}
         </div>
         {/* Add a small icon for dropdown */}
