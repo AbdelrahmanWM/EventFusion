@@ -2,7 +2,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
+import { useContext , useEffect} from "react";
+import { UserContext } from "@/contexts/UserContextProvider";
 import {
   Calendar,
   Users,
@@ -12,10 +13,18 @@ import {
   CreditCard,
   ArrowRight,
 } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 import Hero from "../public/images/hero.png";
 
 export default function HomePage() {
+  const {token,user}=useContext(UserContext);
+  const router=useRouter();
+  useEffect(()=>{
+    if(!token){
+      router.push("/login")
+    }
+  },[token,user,router]) 
+
   return (
     <>
       <main className="flex-1">
