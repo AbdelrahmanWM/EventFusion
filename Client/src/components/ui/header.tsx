@@ -1,5 +1,5 @@
 "use client";
-import { GraduationCap } from "lucide-react";
+import { CalendarDays, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./button";
 import { useEffect, useState } from "react";
@@ -20,8 +20,7 @@ export default function Header() {
       setShowButton(true);
       setUsername("");
     } else {
-      const verifiedToken: MyTokenPayload | null =
-        TokenUtility.getDecodedToken();
+      const verifiedToken: MyTokenPayload | null = TokenUtility.getDecodedToken();
       if (!verifiedToken) {
         setShowButton(true);
         setUsername("");
@@ -34,10 +33,7 @@ export default function Header() {
 
   useEffect(() => {
     checkAuth();
-
-    // Listen for login updates
     window.addEventListener("auth-changed", checkAuth);
-
     return () => {
       window.removeEventListener("auth-changed", checkAuth);
     };
@@ -52,29 +48,38 @@ export default function Header() {
             SEES
           </Link>
         </div>
+
         <nav className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="#about" className=" font-medium hover:text-primary">
+          <Link href="/#about" className="font-medium hover:text-primary">
             About
           </Link>
-          <Link href="#features" className="font-medium hover:text-primary">
+          <Link href="/#features" className="font-medium hover:text-primary">
             Features
           </Link>
-          <Link href="#users" className="font-medium hover:text-primary">
+          <Link href="/#users" className="font-medium hover:text-primary">
             For Users
           </Link>
-          <Link href="#contact" className="font-medium hover:text-primary">
+          <Link href="/#contact" className="font-medium hover:text-primary">
             Contact
           </Link>
+          <Link
+            href="/events"
+            className="flex items-center gap-1 font-medium hover:text-primary"
+          >
+            <CalendarDays className="w-4 h-4" />
+            Browse Events
+          </Link>
         </nav>
+
         {showButton ? (
           <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center gap-4">
-              <Link href="login">
+              <Link href="/login">
                 <Button variant="outline" size="sm">
                   Log in
                 </Button>
               </Link>
-              <Link href="register">
+              <Link href="/register">
                 <Button size="sm">Sign up</Button>
               </Link>
             </div>

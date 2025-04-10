@@ -28,7 +28,7 @@ export class ChatController {
   }
 
   public chat_detail = async (req: Request, res: Response): Promise<void> => {
-    const {chatID  } = req.params;
+    const { chatID } = req.params;
     try {
       const chat = await this.chatService.getChat(chatID);
       sendSuccessResponse(res, "Successfully fetched chat details.", chat, 200);
@@ -36,8 +36,11 @@ export class ChatController {
       sendErrorResponse(res, "Chat not found.", error, 404);
     }
   };
-  public event_chat_detail = async (req: Request, res: Response): Promise<void> => {
-    const {eventID  } = req.params;
+  public event_chat_detail = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    const { eventID } = req.params;
     try {
       const chat = await this.chatService.getEventChat(eventID);
       sendSuccessResponse(res, "Successfully fetched chat details.", chat, 200);
@@ -56,27 +59,50 @@ export class ChatController {
     }
   };
 
-  public chat_add_message = async (req: Request, res: Response): Promise<void> => {
-    const {username,userID,comment,date } = req.body;
+  public chat_add_message = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    const { username, userID, comment, date } = req.body;
     const eventID = req.params.eventID;
+    console.log(req.body); // Log incoming data to check what is being sent
+    console.log(req.params.eventID); // Check eventID param
+
     try {
-      const chat = await this.chatService.addMessage(eventID,username,userID,comment,date);
-      sendSuccessResponse(res, "Successfully added comment to chat.", chat, 200);
+      const chat = await this.chatService.addMessage(
+        eventID,
+        username,
+        userID,
+        comment,
+        date
+      );
+      sendSuccessResponse(
+        res,
+        "Successfully added comment to chat.",
+        chat,
+        200
+      );
     } catch (error) {
       sendErrorResponse(res, "Failed to update chat.", error, 500);
     }
   };
-    public chat_hide_message = async (req: Request, res: Response): Promise<void> => {
-    const {userID,date } = req.body;
+  public chat_hide_message = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    const { userID, date } = req.body;
     const eventID = req.params.eventID;
     try {
-      const chat = await this.chatService.hideUserComment(eventID,userID,date);
+      const chat = await this.chatService.hideUserComment(
+        eventID,
+        userID,
+        date
+      );
       sendSuccessResponse(res, "Successfully hidden chat comment.", chat, 200);
     } catch (error) {
       sendErrorResponse(res, "Failed to update chat.", error, 500);
     }
   };
-
 
   public chat_delete = async (req: Request, res: Response): Promise<void> => {
     const eventID = req.params.eventID;

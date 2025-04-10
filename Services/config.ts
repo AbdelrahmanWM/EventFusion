@@ -29,15 +29,7 @@ class Config {
       throw err;
     }
   }
-  public getEventServicePort(): number {
-    try {
-      const port: string =
-        this.storageService.loadVariable("ROLE_SERVICE_PORT");
-      return parseInt(port);
-    } catch (err: any) {
-      throw err;
-    }
-  }
+
 
   public getUserServicePort(): number {
     try {
@@ -82,6 +74,16 @@ class Config {
     try {
       const port: string =
         this.storageService.loadVariable("INSTITUTION_SERVICE_PORT");
+      return parseInt(port);
+    } catch (err: any) {
+      throw err;
+    }
+  }
+
+    public getEventServicePort(): number {
+    try {
+      const port: string =
+        this.storageService.loadVariable("EVENT_SERVICE_PORT");
       return parseInt(port);
     } catch (err: any) {
       throw err;

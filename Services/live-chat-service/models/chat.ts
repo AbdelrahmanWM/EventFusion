@@ -4,7 +4,7 @@ import { IChat } from "live-chat-service/interfaces/IChat";
 const ChatSchema: Schema = new Schema({
   eventID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Event", 
+    ref: "Event",
     required: true,
   },
   comments: [
@@ -14,9 +14,8 @@ const ChatSchema: Schema = new Schema({
         required: true,
       },
       userID: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "User", 
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
       },
       comment: {
         type: String,
@@ -35,8 +34,7 @@ const ChatSchema: Schema = new Schema({
   ],
 });
 
-ChatSchema.index({eventID:1});
+ChatSchema.index({ eventID: 1 });
 const ChatModel = mongoose.model<IChat>("Chat", ChatSchema);
 
 export default ChatModel;
-

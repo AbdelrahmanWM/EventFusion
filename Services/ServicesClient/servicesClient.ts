@@ -1,10 +1,16 @@
 class ServicesClient {
+  private static instance: ServicesClient;
   private baseURL: string;
 
-  constructor(baseURL: string) {
+  private constructor(baseURL: string) {
     this.baseURL = baseURL;
   }
-
+  public static getInstance(baseURL: string): ServicesClient {
+    if (!ServicesClient.instance) {
+      ServicesClient.instance = new ServicesClient(baseURL);
+    }
+    return ServicesClient.instance;
+  }
   private getFetch(): typeof fetch {
     return fetch;
   }
@@ -100,7 +106,7 @@ class ServicesClient {
   // ========================== //
   // Backend Service Endpoints  //
   // ========================== //
- // ========================== //
+  // ========================== //
   // Role Service Endpoints    //
   // ========================== //
 
@@ -125,7 +131,6 @@ class ServicesClient {
   ) {
     return await this.get(`/roles/${eventID}/users/${userID}`, headers);
   }
-  
 
   // Create new roles
   public async createUserRoles(
@@ -176,6 +181,21 @@ class ServicesClient {
     return {
       Authorization: `Bearer ${jsonWebToken}`,
     };
+  }
+  // ========================== //
+  // Chat Service Endpoints    //
+  // ========================== //
+  public async createLiveChat(
+    eventID: string,
+    headers?: Record<string, string>
+  ) {
+    return await this.post(`/livechats/${eventID}`, {});
+  }
+  public async deleteLiveChat(
+    eventID: string,
+    headers?: Record<string, string>
+  ) {
+    return await this.delete(`/livechats/${eventID}`);
   }
 }
 

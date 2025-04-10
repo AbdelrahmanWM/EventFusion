@@ -1,9 +1,4 @@
-import { EventFormat } from "event-service/enums/eventFormat";
-import { EventType } from "event-service/enums/eventType";
-import { Document } from "mongoose";
-import { ISession } from "./ISession";
-
-export interface IEvent extends Document{
+export interface IEvent {
     _id:string;
     title: string;
     summary: string;// summary
@@ -12,7 +7,7 @@ export interface IEvent extends Document{
     tags:string[];
     /// organizors will be fetched by role
     type: EventType;
-    format: EventFormat;
+    format: string;
     date_time:{
         start:Date,
         end: Date,
@@ -38,4 +33,30 @@ export interface IEvent extends Document{
     }>;
     promos:{name:string, discount:number}[];
     // stakeholders: string[];
+}
+
+export interface ISession{ 
+    title: string; 
+    startTime: string; 
+    endTime: string; 
+    speakers: string[]; 
+    agenda: string 
+}
+export enum EventType {
+  Conference = "Conference",
+  Workshop = "Workshop",
+  Seminar = "Seminar",
+  Webinar = "Webinar"
+}
+
+
+export interface IChat {
+  eventID: string; /// reference to events schema
+  comments: Array<{
+    username: string;
+    userID: string; // reference to users schema;
+    comment: string;
+    date: Date;
+    isHidden: boolean;
+  }>;
 }

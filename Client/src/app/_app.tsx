@@ -1,7 +1,21 @@
 "use client"
-import { ThemeProvider as NextThemesProvider } from "next-themes"
-import type { ThemeProviderProps } from "next-themes"
+// pages/_app.js
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
-}
+const App = ({ Component, pageProps }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("auth_token");
+
+    // Protect all pages except login
+    if (!token && router.pathname !== "/login") {
+      router.push("/login");
+    }
+  }, [router]);
+
+  return <Component {...pageProps} />;
+};
+
+export default App;

@@ -62,8 +62,8 @@ class APIGateway {
       this.app.use("/users", proxy(userServiceURL, this.proxyOptions));
       this.app.use("/events", proxy(eventServiceURL, this.proxyOptions));
       this.app.use("/roles", proxy(roleServiceURL, this.proxyOptions));
-      this.app.use("/payment",proxy(paymentServiceURL,this.proxyOptions));
-      this.app.use("/livechat",proxy(liveChatServiceURL,this.proxyOptions));
+      this.app.use("/payments",proxy(paymentServiceURL,this.proxyOptions));
+      this.app.use("/livechats",proxy(liveChatServiceURL,this.proxyOptions));
       this.app.use("/institutions",proxy(institutionServiceURL,this.proxyOptions));
 
     } catch (err: any) {

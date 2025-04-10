@@ -113,7 +113,11 @@ class ServiceClient {
 
   // Auth Service Endpoints
   public async login(username: string, password: string) {
-    return await this.post("/users/authenticate/login", { username, password });
+    try {
+      return await this.post("/users/authenticate/login", { username, password });
+    } catch {
+      return null;
+    }
   }
   public async verifyToken(jsonWebToken: string): Promise<boolean> {
     try {
@@ -133,110 +137,366 @@ class ServiceClient {
 
   // User Service Endpoints
   public async getUserByUsername(username: string, jsonWebToken: string) {
-    return await this.get(
-      `/users/${username}`,
-      ServiceClient.getAuthHeaders(jsonWebToken)
-    );
+    try {
+      return await this.get(
+        `/users/${username}`,
+        ServiceClient.getAuthHeaders(jsonWebToken)
+      );
+    } catch {
+      return null;
+    }
   }
-
+  
   public async createUser(userData: any) {
-    return await this.post("/users", userData);
+    try {
+      return await this.post("/users", userData);
+    } catch {
+      return null;
+    }
   }
-
+  
   public async updateUser(
     username: string,
     userData: any,
     jsonWebToken: string
   ) {
-    return await this.put(
-      `/users/${username}`,
-      userData,
-      ServiceClient.getAuthHeaders(jsonWebToken)
-    );
+    try {
+      return await this.put(
+        `/users/${username}`,
+        userData,
+        ServiceClient.getAuthHeaders(jsonWebToken)
+      );
+    } catch {
+      return null;
+    }
   }
-
+    
+  public async updateUserBalance(
+    username: string,
+    addedToBalance:number,
+    jsonWebToken: string
+  ) {
+    try {
+      return await this.put(
+        `/users/balance/${username}`,
+        {balance:addedToBalance},
+        ServiceClient.getAuthHeaders(jsonWebToken)
+      );
+    } catch {
+      return null;
+    }
+  }
   public async deleteUser(username: string, jsonWebToken: string) {
-    return await this.delete(
-      `/users/${username}`,
-      ServiceClient.getAuthHeaders(jsonWebToken)
-    );
+    try {
+      return await this.delete(
+        `/users/${username}`,
+        ServiceClient.getAuthHeaders(jsonWebToken)
+      );
+    } catch {
+      return null;
+    }
   }
-
+  
   public async getUserList(jsonWebToken: string) {
-    return await this.get("/users", ServiceClient.getAuthHeaders(jsonWebToken));
+    try {
+      return await this.get("/users", ServiceClient.getAuthHeaders(jsonWebToken));
+    } catch {
+      return null;
+    }
   }
 
   // ========================== //
   // Role Service Endpoints    //
   // ========================== //
 
-  // Fetch roles by event ID
-  public async getRolesByEvent(
-    eventID: string,
-    headers?: Record<string, string>
-  ) {
+ // Role Service Methods
+public async getRolesByEvent(
+  eventID: string,
+  headers?: Record<string, string>
+) {
+  try {
     return await this.get(`/roles/${eventID}`, headers);
+  } catch {
+    return null;
   }
+}
 
-  // Fetch user roles by event and user ID
-  public async getUserRolesByEvent(
-    eventID: string,
-    userID: string,
-    headers?: Record<string, string>
-  ) {
+public async getUserRolesByEvent(
+  eventID: string,
+  userID: string,
+  headers?: Record<string, string>
+) {
+  try {
     return await this.get(`/roles/${eventID}/users/${userID}`, headers);
+  } catch {
+    return null;
   }
+}
 
-  // Create new roles
-  public async createUserRoles(
-    roleData: any,
-    headers?: Record<string, string>
-  ) {
+public async createUserRoles(roleData: any, headers?: Record<string, string>) {
+  try {
     return await this.post("/roles", roleData, headers);
+  } catch {
+    return null;
   }
+}
 
-  // Assign a role to a user for a specific event
-  public async assignUserRole(
-    userID: string,
-    eventID: string,
-    role: string,
-    headers?: Record<string, string>
-  ) {
+public async assignUserRole(
+  userID: string,
+  eventID: string,
+  role: string,
+  token: string
+) {
+  try {
     return await this.put(
       "/roles/assignRole",
       { userID, eventID, role },
-      headers
+      ServiceClient.getAuthHeaders(token)
     );
+  } catch {
+    return null;
   }
+}
 
-  // Unassign a role from a user for a specific event
-  public async unassignUserRole(
-    userID: string,
-    eventID: string,
-    role: string,
-    headers?: Record<string, string>
-  ) {
+public async unassignUserRole(
+  userID: string,
+  eventID: string,
+  role: string,
+  headers?: Record<string, string>
+) {
+  try {
     return await this.put(
       "/roles/unassignRole",
       { userID, eventID, role },
       headers
     );
+  } catch {
+    return null;
   }
+}
 
-  // Remove all roles for a user for a specific event
-  public async removeUserRoles(
-    userID: string,
-    eventID: string,
-    headers?: Record<string, string>
-  ) {
+public async removeUserRoles(
+  userID: string,
+  eventID: string,
+  headers?: Record<string, string>
+) {
+  try {
     return await this.delete(`/roles/${eventID}/users/${userID}`, headers);
+  } catch {
+    return null;
   }
+}
+
 
   private static getAuthHeaders(jsonWebToken: string): Record<string, string> {
     return {
       Authorization: `Bearer ${jsonWebToken}`,
     };
   }
+
+/// Event Service Methods
+public async getEvents() {
+  try {
+    return await this.get(
+      `/events` 
+    );
+  } catch {
+    return null;
+  }
 }
 
+public async getEventById(eventID: string) {
+  try {
+    return await this.get(
+      `/events/${eventID}`
+    );
+  } catch {
+    return null;
+  }
+}
+
+public async createEvent(eventData: any) {
+  try {
+    return await this.post(`/events`, eventData);
+  } catch {
+    return null;
+  }
+}
+
+public async updateEvent(eventID: string, updates: any, jsonWebToken: string) {
+  try {
+    return await this.put(
+      `/events/${eventID}`,
+      updates,
+      ServiceClient.getAuthHeaders(jsonWebToken)
+    );
+  } catch {
+    return null;
+  }
+}
+
+public async deleteEvent(eventID: string, jsonWebToken: string) {
+  try {
+    return await this.delete(
+      `/events/${eventID}`,
+      ServiceClient.getAuthHeaders(jsonWebToken)
+    );
+  } catch {
+    return null;
+  }
+}
+
+public async addUserToEvent(
+  eventID: string,
+  userID: string,
+  role: string,
+  jsonWebToken: string
+) {
+  try {
+    return await this.post(
+      `/events/${eventID}/users`,
+      { userID, role },
+      ServiceClient.getAuthHeaders(jsonWebToken)
+    );
+  } catch {
+    return null;
+  }
+}
+
+public async removeUserFromEvent(
+  eventID: string,
+  userID: string,
+  role: string,
+  jsonWebToken: string
+) {
+  try {
+    return await this.delete(
+      `/events/${eventID}/users`,
+      {
+        ...ServiceClient.getAuthHeaders(jsonWebToken),
+        "Content-Type": "application/json",
+      }
+    );
+  } catch {
+    return null;
+  }
+}
+
+public async addSession(
+  eventID: string,
+  sessionData: any,
+  jsonWebToken: string
+) {
+  try {
+    return await this.post(
+      `/events/${eventID}/agenda`,
+      sessionData,
+      ServiceClient.getAuthHeaders(jsonWebToken)
+    );
+  } catch {
+    return null;
+  }
+}
+
+public async removeSessionByTitle(
+  eventID: string,
+  title: string,
+  jsonWebToken: string
+) {
+  try {
+    return await this.delete(
+      `/events/${eventID}/agenda`,
+      {
+        ...ServiceClient.getAuthHeaders(jsonWebToken),
+        "Content-Type": "application/json",
+      }
+    );
+  } catch {
+    return null;
+  }
+}
+
+public async getEventListForUserByRole(
+  userID: string,
+  role: string,
+  jsonWebToken: string
+) {
+  try {
+    return await this.get(
+      `/events/user/${userID}?role=${role}`,
+      ServiceClient.getAuthHeaders(jsonWebToken)
+    );
+  } catch {
+    return null;
+  }
+}
+
+
+///////////////////// CHAT service related functionality
+public async getChat(chatID: string) {
+  try {
+    return await this.get(`/livechats/${chatID}`);
+  } catch (error) {
+    console.error("Error fetching chat:", error);
+    throw error;
+  }
+}
+
+public async getEventChat(eventID: string) {
+  try {
+    return await this.get(`/livechats/event/${eventID}`);
+  } catch (error) {
+    console.error("Error fetching event chat:", error);
+    throw error;
+  }
+}
+
+public async createChat(eventID: string) {
+  try {
+    return await this.post(`/livechats/${eventID}`, {});
+  } catch (error) {
+    console.error("Error creating chat:", error);
+    throw error;
+  }
+}
+
+public async addMessage(eventID: string, username: string, userID: string, comment: string, date: string) {
+  try {
+    return await this.put(`/livechats/addMessage/${eventID}`, { username, userID, comment, date });
+  } catch (error) {
+    console.error("Error adding message to chat:", error);
+    return null
+  }
+}
+
+public async hideMessage(eventID: string, userID: string, date: string) {
+  try {
+    return await this.put(`/livechats/${eventID}/messages/hide`, { userID, date });
+  } catch (error) {
+    console.error("Error hiding message in chat:", error);
+    throw error;
+  }
+}
+
+public async deleteChat(eventID: string) {
+  try {
+    return await this.delete(`/livechats/${eventID}`);
+  } catch (error) {
+    console.error("Error deleting chat:", error);
+    throw error;
+  }
+}
+public async createFeedback(eventID: string, userID: string, rating: number, comment?: string) {
+  try {
+  
+      const body = { eventID, userID, rating, comment };
+      const feedback = await this.post("/events/feedback", body);
+
+      return feedback;
+  } catch (error: any) {
+      throw new Error("Failed to create feedback: " + error.message);
+  }
+}
+
+}
 export default ServiceClient;

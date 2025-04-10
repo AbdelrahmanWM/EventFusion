@@ -28,7 +28,7 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
 
     setIsLoading(false);
-  }, [router]);  
+  },[router]);  
 
 
   if (isLoading) {

@@ -69,7 +69,31 @@ class UserService implements IUserService {
             throw new Error(`Failed to update user: ${error.message}`);
         }
     }
-
+    async updateUserBalance(username: string, addedToBalance: number): Promise<IUser> {
+        try {
+            if (isNaN(addedToBalance)) {
+                throw new Error("Added balance is not a valid number.");
+            }
+    
+            console.log(`Incrementing balance for ${username} by ${addedToBalance}`);
+    
+            const currentUser = await User.findOne({ username: username });
+    
+            if (!currentUser) {
+                throw new Error("User not found.");
+            }
+            const newBalance = currentUser.balance + addedToBalance;
+            const updatedUser = await this.updateUser(username, { balance: newBalance });
+    
+            console.log(`User balance updated: ${updatedUser.balance}`); 
+            return updatedUser;
+        } catch (error: any) {
+            console.error(`Failed to update user balance: ${error.message}`);
+            throw new Error(`Failed to update user balance: ${error.message}`);
+        }
+    }
+    
+    
     async deleteUser(username: String):Promise<IUser>{
         try{
             const user:IUser|null = await User.findOneAndDelete({username:username});
