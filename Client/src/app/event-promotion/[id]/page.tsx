@@ -3,7 +3,10 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import SocialMediaShare from "../../../components/features/Promotion/SocialMediaShare";
+import SocialMediaShare from "@/components/features/Promotion/SocialMediaShare";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const EventDetailPage: React.FC = () => {
   const searchParams = useSearchParams();
@@ -23,7 +26,7 @@ const EventDetailPage: React.FC = () => {
     setPromotion(eventData);
   }, [searchParams]);
 
-  const handleRegisterAttendee = async () => {
+  const handleRegisterAttendee = () => {
     const newAttendee = { name, email };
     setAttendees([...attendees, newAttendee]);
     setName('');
@@ -44,59 +47,40 @@ const EventDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="hero mb-6">
-        <img src={promotion.image} alt={promotion.title} className="w-full h-72 object-cover rounded-lg shadow-lg" />
-      </div>
+    <div className="container mx-auto p-6 space-y-6">
+      <Card className="p-4">
+        <img src={promotion.image} alt={promotion.title} className="w-full h-72 object-cover rounded-md mb-4" />
+        <h1 className="text-4xl font-bold mb-2">{promotion.title}</h1>
+        <p className="text-lg text-muted-foreground mb-2">{promotion.description}</p>
+        <p className="text-sm text-muted-foreground">📅 {promotion.date} | 📍 {promotion.location}</p>
+      </Card>
 
-      <h1 className="text-4xl font-bold mb-4">{promotion.title}</h1>
-      <p className="text-lg text-gray-600 mb-4">{promotion.description}</p>
-      <div className="event-info mb-4">
-        <p className="text-sm text-gray-500">📅 {promotion.date}</p>
-        <p className="text-sm text-gray-500">📍 {promotion.location}</p>
-      </div>
+      <Card className="p-4">
+        <SocialMediaShare
+          title={promotion.title}
+          description={promotion.description}
+          imageUrl={promotion.image}
+          eventUrl={typeof window !== "undefined" ? window.location.href : ""}
+        />
+      </Card>
 
-      <SocialMediaShare
-        title={promotion.title}
-        description={promotion.description}
-        imageUrl={promotion.image}
-        eventUrl={window.location.href}
-      />
-
-      <div className="attendees mb-6">
-        <h3 className="text-xl font-bold">Attendees ({attendees.length})</h3>
-        <ul>
+      <Card className="p-4">
+        <h3 className="text-xl font-bold mb-2">Attendees ({attendees.length})</h3>
+        <ul className="mb-4">
           {attendees.map((attendee, index) => (
-            <li key={index} className="mb-2">
+            <li key={index} className="text-muted-foreground">
               {attendee.name} ({attendee.email})
             </li>
           ))}
         </ul>
-      </div>
 
-      <div className="register-attendee mt-6">
-        <h3 className="text-xl font-bold mb-2">Register New Attendee</h3>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="border p-2 mb-2 w-full"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 mb-2 w-full"
-        />
-        <button
-          onClick={handleRegisterAttendee}
-          className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition mt-2"
-        >
-          Register Attendee
-        </button>
-      </div>
+        <h3 className="text-lg font-semibold mb-2">Register New Attendee</h3>
+        <div className="grid gap-2 mb-2">
+          <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+          <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </div>
+        <Button onClick={handleRegisterAttendee} className="w-full">Register</Button>
+      </Card>
     </div>
   );
 };

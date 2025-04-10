@@ -12,6 +12,9 @@ import {
   mockPromotions,
 } from "../../components/features/Promotion/PromotionCard";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
+
 const EventPromotionPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"promotions" | "emailCampaigns">(
     "promotions"
@@ -55,44 +58,32 @@ const EventPromotionPage: React.FC = () => {
       <div className="container mx-auto p-6 flex-grow">
         <h1 className="text-3xl font-bold mb-6">Event Promotions</h1>
 
-        <div className="flex space-x-4 border-b mb-4">
-          <button
-            className={`px-4 py-2 ${
-              activeTab === "promotions"
-                ? "border-b-2 border-blue-600 font-bold"
-                : "text-gray-600"
-            }`}
-            onClick={() => setActiveTab("promotions")}
-          >
-            Event Details
-          </button>
-          <button
-            className={`px-4 py-2 ${
-              activeTab === "emailCampaigns"
-                ? "border-b-2 border-blue-600 font-bold"
-                : "text-gray-600"
-            }`}
-            onClick={() => setActiveTab("emailCampaigns")}
-          >
-            Email Campaigns
-          </button>
-        </div>
+        <Tabs defaultValue="promotions" className="w-full">
+          <TabsList className="mb-4">
+            <TabsTrigger value="promotions">Event Details</TabsTrigger>
+            <TabsTrigger value="emailCampaigns">Email Campaigns</TabsTrigger>
+          </TabsList>
 
-        {activeTab === "promotions" ? (
-          <>
-            <PromotionList
-              promotions={promotions}
-              setPromotions={setPromotions}
-            />
-            <PromotionForm onAddPromotion={handleAddPromotion} />
-          </>
-        ) : (
-          <EmailCampaignForm
-            onSubmitCampaign={handleEmailCampaignSubmit}
-            emailLogs={emailLogs}
-            setEmailLogs={setEmailLogs}
-          />
-        )}
+          <TabsContent value="promotions">
+            <Card className="p-4 space-y-6">
+              <PromotionList
+                promotions={promotions}
+                setPromotions={setPromotions}
+              />
+              <PromotionForm onAddPromotion={handleAddPromotion} />
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="emailCampaigns">
+            <Card className="p-4">
+              <EmailCampaignForm
+                onSubmitCampaign={handleEmailCampaignSubmit}
+                emailLogs={emailLogs}
+                setEmailLogs={setEmailLogs}
+              />
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
