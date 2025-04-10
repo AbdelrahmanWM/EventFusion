@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 interface SocialMediaShareProps {
   title: string;
@@ -13,46 +16,34 @@ const SocialMediaShare: React.FC<SocialMediaShareProps> = ({
   imageUrl,
   eventUrl,
 }) => {
-  // Twitter share URL
   const twitterShare = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     title
   )}&url=${encodeURIComponent(eventUrl)}&via=yourTwitterHandle`;
 
-  // Facebook share URL
   const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
     eventUrl
   )}`;
 
-  // LinkedIn share URL
   const linkedInShare = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
     eventUrl
   )}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description)}&source=${encodeURIComponent(eventUrl)}`;
 
   return (
-    <div className="flex space-x-4 mt-4">
-      <a
-        href={twitterShare}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-      >
-        Share on Twitter
+    <div className="flex flex-wrap gap-4 mt-6">
+      <a href={twitterShare} target="_blank" rel="noopener noreferrer">
+        <Button variant="default" className="bg-[#1DA1F2] hover:bg-[#1A91DA]">
+          Share on Twitter
+        </Button>
       </a>
-      <a
-        href={facebookShare}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800"
-      >
-        Share on Facebook
+      <a href={facebookShare} target="_blank" rel="noopener noreferrer">
+        <Button variant="default" className="bg-[#1877F2] hover:bg-[#145DBF]">
+          Share on Facebook
+        </Button>
       </a>
-      <a
-        href={linkedInShare}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-950"
-      >
-        Share on LinkedIn
+      <a href={linkedInShare} target="_blank" rel="noopener noreferrer">
+        <Button variant="default" className="bg-[#0A66C2] hover:bg-[#084B9E]">
+          Share on LinkedIn
+        </Button>
       </a>
     </div>
   );
