@@ -2,33 +2,36 @@
 
 import React, { useState } from "react";
 import { useServicesClient } from "@/hooks/userServicesClient";
-import { Button } from "@/components/ui/button"; // You may need to import Button component if using UI components
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(""); // NEW: for showing login errors
   const servicesClient = useServicesClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoginError(""); // clear any previous error
+
     try {
       const response = await servicesClient.login(username, password);
-
+      if(response){
       if (!response.error) {
         localStorage.setItem("auth_token", response.data.token);
-
-
         window.dispatchEvent(new Event("auth-changed"));
-        console.log("Login successful!");
-        router.push("/")
-        console.log(response.data); 
+        router.push("/");
       } else {
-        console.error(response.message || "Something went wrong!");
+        setLoginError(response.message || "Invalid username or password.");
+      }
+      }else{
+        setLoginError("An unexpected error occurred. Please try again later.");
       }
     } catch (error) {
       console.error("Error logging in:", error);
+      setLoginError("An unexpected error occurred. Please try again later.");
     }
   };
 
@@ -65,6 +68,10 @@ export default function LoginForm() {
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
         </div>
+
+        {loginError && (
+          <div className="text-red-500 text-sm text-center">{loginError}</div>
+        )}
 
         <div className="flex justify-center">
           <Button className="w-full py-2 px-4 text-white bg-primary rounded-md hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary">

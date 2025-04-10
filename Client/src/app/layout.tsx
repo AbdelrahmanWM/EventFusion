@@ -3,11 +3,11 @@ import type React from "react";
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import ModeToggle from "../components/ui/ModeToggle";
-import { ThemeProvider } from "./_app";
+import { ThemeProvider } from "next-themes";
 import { ServicesClientContextProvider } from "@/contexts/ServicesClientContext";
 import Header from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
-import { UserContextProvider } from "@/contexts/UserContextProvider";
+// import { UserContextProvider } from "@/contexts/UserContextProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -16,7 +16,7 @@ export const metadata = {
   description: "A cutting-edge platform for organizing, managing, and engaging with educational events",
 };
 
-export default function RootLayout({
+function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className}`}>
         <ServicesClientContextProvider>
-          <UserContextProvider>
+          {/* <UserContextProvider> */}
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -41,9 +41,10 @@ export default function RootLayout({
                 <ModeToggle />
               </div>
             </ThemeProvider>
-          </UserContextProvider>
+          {/* </UserContextProvider> */}
         </ServicesClientContextProvider>
       </body>
     </html>
   );
 }
+export default RootLayout;
