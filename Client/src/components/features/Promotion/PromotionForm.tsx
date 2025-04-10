@@ -32,7 +32,7 @@ const PromotionForm: React.FC<{ onAddPromotion: (promotion: Promotion) => void }
       description,
       date,
       location,
-      image,
+      image: image.trim() || "/images/event-promotion.png", // ✅ fallback
     };
 
     onAddPromotion(newPromotion);
@@ -47,8 +47,8 @@ const PromotionForm: React.FC<{ onAddPromotion: (promotion: Promotion) => void }
   };
 
   return (
-    <Card className="max-w-3xl mx-auto mt-6">
-      <CardHeader>
+<Card className="w-full max-w-4xl mx-auto mt-10 p-6 sm:p-10 shadow-xl rounded-xl">
+<CardHeader>
         <CardTitle className="text-center text-2xl">Add Event Promotion</CardTitle>
       </CardHeader>
       <CardContent>

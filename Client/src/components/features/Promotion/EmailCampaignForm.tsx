@@ -70,13 +70,13 @@ const EmailCampaignForm: React.FC<EmailCampaignFormProps> = ({
   };
 
   return (
-    <Card className="max-w-2xl mx-auto">
+      <Card className="w-full max-w-4xl mx-auto mt-8 p-6 shadow-xl">
       <CardHeader>
-        <CardTitle>Create Email Campaign</CardTitle>
+      <CardTitle className="text-2xl text-center">Create Email Campaign</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+      <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
             <Label>Select Template</Label>
             <select
               value={templateId ?? ""}
