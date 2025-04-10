@@ -67,7 +67,7 @@ class ChatServiceApp {
   }
   public start(): void {
     this.httpServer.listen(this.port, () => {
-      ConsoleLoggerService.log(`Server running on port ${this.port}`);
+      ConsoleLoggerService.log(`Chat service running on port ${this.port}`);
     });
   }
 }

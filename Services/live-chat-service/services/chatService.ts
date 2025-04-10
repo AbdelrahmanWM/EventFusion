@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { IChat } from "../interfaces/IChat";
 import { IChatService } from "../interfaces/IChatService";
 import Chat from "../models/chat";
@@ -63,32 +64,37 @@ class ChatService implements IChatService {
       throw new Error(`Failed to create chat: ${error.message}`);
     }
   }
+
   public async addMessage(
     eventID: string,
     username: string,
-    userID: string,
+    userID: string, 
     comment: string,
     date: string
   ): Promise<IChat> {
     try {
-      const chat: IChat | null = await Chat.findOne({eventID:eventID});
+      const chat: IChat | null = await Chat.findOne({ eventID: eventID });
       if (!chat) {
         throw new Error("Chat not found");
       }
+  
+      const objectIdUserID = Types.ObjectId.isValid(userID) ? new Types.ObjectId(userID) : null;
+  
       chat.comments.push({
         username,
-        userID,
+        userID: objectIdUserID, 
         comment,
         date: new Date(date),
         isHidden: false,
       });
-
+  
       await chat.save();
       return chat;
     } catch (error: any) {
-      throw new error(`Failed to add new message: ${error.message}`);
+      throw new Error(`Failed to add new message ${username} ${userID}: ${error.message}`);
     }
   }
+  
 
   public async hideUserComment(
     eventID: string,

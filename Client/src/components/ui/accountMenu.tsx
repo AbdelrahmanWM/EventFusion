@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"; // Assuming Button component is available
 import TokenUtility from "@/ServicesClient/tokenUtility";
 import { CircleChevronDown } from 'lucide-react';
+import Link from "next/link";
 
 interface AccountMenuProps {
   username: string;
@@ -49,12 +50,10 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
         <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-10">
           <ul className="py-2">
             <li>
-              <a
-                href="/profile"
-                className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-              >
+
+                <Link href="/userProfile" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">
                 Profile
-              </a>
+                </Link>
             </li>
             <li>
               <a

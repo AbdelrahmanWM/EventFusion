@@ -60,10 +60,31 @@ class EventService implements IEventService {
   }
 
   public async createEvent(eventData: Partial<IEvent>): Promise<IEvent> {
-    const newEvent = new EventModel(eventData);
-    await newEvent.save();
-    return newEvent;
-  }
+    try {
+        if (!eventData || Object.keys(eventData).length === 0) {
+            throw new Error("Event data cannot be empty.");
+        }
+
+        const newEvent = new EventModel(eventData);
+
+        if (!this.servicesClient || typeof this.servicesClient.createLiveChat !== "function") {
+            throw new Error("Service client is not properly configured.");
+        }
+
+        const newEventChat = await this.servicesClient.createLiveChat(newEvent._id);
+
+        if (!newEventChat) {
+            throw new Error("Failed to create live chat for the event.");
+        }
+
+        await newEvent.save();
+
+        return newEvent;
+    } catch (error:any) {
+        throw new Error(`Failed to create event: ${error.message}`);
+    }
+}
+
 
   public async updateEvent(
     eventID: string,
@@ -77,10 +98,26 @@ class EventService implements IEventService {
   }
 
   public async deleteEvent(eventID: string): Promise<IEvent> {
-    const deletedEvent = await EventModel.findByIdAndDelete(eventID);
-    if (!deletedEvent) throw new Error("Event not found");
-    return deletedEvent;
-  }
+    try {
+        if (!eventID) {
+            throw new Error("Event ID is required.");
+        }
+        const deletedEvent = await EventModel.findByIdAndDelete(eventID);
+        if (!deletedEvent) {
+            throw new Error(`Event with ID ${eventID} not found.`);
+        }
+        if (!this.servicesClient || typeof this.servicesClient.deleteLiveChat !== "function") {
+            throw new Error("Service client is not properly configured.");
+        }
+        const deletedChat = await this.servicesClient.deleteLiveChat(eventID);
+        if (!deletedChat) {
+            throw new Error(`Failed to delete live chat associated with event ID ${eventID}.`);
+        }
+        return deletedEvent;
+    } catch (error: any) {
+        throw new Error(`Failed to delete event: ${error.message}`);
+    }
+}
 
   public async addUserToEvent(
     userID: string,

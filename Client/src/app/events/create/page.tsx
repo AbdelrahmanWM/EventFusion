@@ -15,7 +15,7 @@ export default function CreateEventPage() {
     aboutTheEvent: [""],
     description: "",
     tags: [""],
-    type: "Technology",
+    type: "Conference",
     format: "Hybrid",
     date_time: {
       start: "",
@@ -23,6 +23,9 @@ export default function CreateEventPage() {
       timezone: "UTC",
     },
     location: "",
+  pictures:{
+        coverPicture:""
+    },
     agenda: [
       {
         title: "",
@@ -130,9 +133,27 @@ export default function CreateEventPage() {
         <input name="title" placeholder="Title" className="w-full border p-2" value={eventData.title} onChange={handleChange} required/>
         <input name="summary" placeholder="Summary" className="w-full border p-2" value={eventData.summary} onChange={handleChange} required/>
         <textarea name="description" placeholder="Full description" className="w-full border p-2" value={eventData.description} onChange={handleChange} required/>
-        <input name="location" placeholder="Location" className="w-full border p-2" value={eventData.location} onChange={handleChange} required/>
-        <input name="streamLink" placeholder="Stream link" className="w-full border p-2" value={eventData.streamLink} onChange={handleChange} required />
+        <input name="location" placeholder="Location" className="w-full border p-2" value={eventData.location} onChange={handleChange}/>
+        <input name="streamLink" placeholder="Stream link" className="w-full border p-2" value={eventData.streamLink} onChange={handleChange} />
+        <input name="coverPicture" placeholder="Cover picture" type="url" className="w-full border p-2" value={eventData.pictures.coverPicture} onChange={(e) => handleNestedChange("pictures", "coverPicture", e.target.value)} />
         <textarea name="venueInformation" placeholder="Venue Info" className="w-full border p-2" value={eventData.venueInformation} onChange={handleChange} required/>
+
+        <h2 className="font-semibold mt-4">Type and Format</h2>        
+        <select id="type" name="type" className="w-full border p-2" value={eventData.type} onChange={handleChange}>
+          <option value="" disabled selected>Select an event type</option>
+          <option value="Conference">Conference</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Seminar">Seminar</option>
+          <option value="Webinar">Webinar</option>
+        </select>
+
+        <select id="format" name="format" className="w-full border p-2" value={eventData.format} onChange={handleChange}>
+          <option value="" disabled selected>Select an event format</option>
+          <option value="In-Person">In-person</option>
+          <option value="Online">Online</option>
+          <option value="Hybrid">Hybrid</option>
+        </select>
+ 
 
         <h2 className="font-semibold">About the Event</h2>
         {eventData.aboutTheEvent.map((val, i) => (

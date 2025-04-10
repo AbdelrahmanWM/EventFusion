@@ -170,6 +170,22 @@ class ServiceClient {
       return null;
     }
   }
+    
+  public async updateUserBalance(
+    username: string,
+    addedToBalance:number,
+    jsonWebToken: string
+  ) {
+    try {
+      return await this.put(
+        `/users/balance/${username}`,
+        {balance:addedToBalance},
+        ServiceClient.getAuthHeaders(jsonWebToken)
+      );
+    } catch {
+      return null;
+    }
+  }
   public async deleteUser(username: string, jsonWebToken: string) {
     try {
       return await this.delete(
@@ -229,13 +245,13 @@ public async assignUserRole(
   userID: string,
   eventID: string,
   role: string,
-  headers?: Record<string, string>
+  token: string
 ) {
   try {
     return await this.put(
       "/roles/assignRole",
       { userID, eventID, role },
-      headers
+      ServiceClient.getAuthHeaders(token)
     );
   } catch {
     return null;
@@ -414,6 +430,73 @@ public async getEventListForUserByRole(
     return null;
   }
 }
+
+
+///////////////////// CHAT service related functionality
+public async getChat(chatID: string) {
+  try {
+    return await this.get(`/livechats/${chatID}`);
+  } catch (error) {
+    console.error("Error fetching chat:", error);
+    throw error;
+  }
 }
 
+public async getEventChat(eventID: string) {
+  try {
+    return await this.get(`/livechats/event/${eventID}`);
+  } catch (error) {
+    console.error("Error fetching event chat:", error);
+    throw error;
+  }
+}
+
+public async createChat(eventID: string) {
+  try {
+    return await this.post(`/livechats/${eventID}`, {});
+  } catch (error) {
+    console.error("Error creating chat:", error);
+    throw error;
+  }
+}
+
+public async addMessage(eventID: string, username: string, userID: string, comment: string, date: string) {
+  try {
+    return await this.put(`/livechats/addMessage/${eventID}`, { username, userID, comment, date });
+  } catch (error) {
+    console.error("Error adding message to chat:", error);
+    return null
+  }
+}
+
+public async hideMessage(eventID: string, userID: string, date: string) {
+  try {
+    return await this.put(`/livechats/${eventID}/messages/hide`, { userID, date });
+  } catch (error) {
+    console.error("Error hiding message in chat:", error);
+    throw error;
+  }
+}
+
+public async deleteChat(eventID: string) {
+  try {
+    return await this.delete(`/livechats/${eventID}`);
+  } catch (error) {
+    console.error("Error deleting chat:", error);
+    throw error;
+  }
+}
+public async createFeedback(eventID: string, userID: string, rating: number, comment?: string) {
+  try {
+  
+      const body = { eventID, userID, rating, comment };
+      const feedback = await this.post("/events/feedback", body);
+
+      return feedback;
+  } catch (error: any) {
+      throw new Error("Failed to create feedback: " + error.message);
+  }
+}
+
+}
 export default ServiceClient;

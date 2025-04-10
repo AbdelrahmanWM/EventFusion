@@ -40,7 +40,7 @@ class RoleServiceApp {
   }
   public start(): void {
     this.app.listen(this.port, () => {
-      ConsoleLoggerService.log(`Server running on port ${this.port}`);
+      ConsoleLoggerService.log(`Role service running on port ${this.port}`);
     });
   }
 }

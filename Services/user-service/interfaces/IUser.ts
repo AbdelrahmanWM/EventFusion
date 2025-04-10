@@ -7,4 +7,5 @@ export interface IUser extends Document{
     lastName: string;
     password: string;
     phoneNumbe: string;
+    balance: number;
 }

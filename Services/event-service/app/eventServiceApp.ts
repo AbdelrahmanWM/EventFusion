@@ -1,35 +1,33 @@
 import express, { Application, Request, Response,NextFunction } from "express";
 import Config from "../config/config";
 import cors from "cors";
-import PassportJWTStrategy from "../strategies/jwtStrategy";
-import UserRouter from "../routes/userRoute";
-import AuthRouter from "../routes/authRoute";
 import ConsoleLoggerService from "../../logger-service/services/consoleLoggerService";
 import { sendErrorResponse } from "shared/utilities/Response";
+import EventRouter from "event-service/routes/eventRouter";
+import PollRouter from "event-service/routes/pollRouter";
+import FeedbackRouter from "event-service/routes/feedbackRouter";
 
-class UserServiceApp {
-  private static instance: UserServiceApp;
+class EventServiceApp {
+  private static instance: EventServiceApp;
 
   private app: Application;
   private port: number;
   private config: Config;
-  private passportJWTStrategy: PassportJWTStrategy;
-  private userRouter: UserRouter;
-  private authRouter: AuthRouter;
-
+  private eventRouter: EventRouter;
+private pollRouter: PollRouter;
+private feedbackRouter: FeedbackRouter;
   private constructor(
     config: Config,
-    passportJWTStrategy: PassportJWTStrategy,
-    userRouter: UserRouter,
-    authRouter: AuthRouter
+    eventRouter: EventRouter,
+    pollRouter: PollRouter,
+    feedbackRouter: FeedbackRouter
   ) {
     this.app = express();
     this.config = config;
     this.port = this.config.getPort();
-    this.passportJWTStrategy = passportJWTStrategy;
-    this.userRouter = userRouter;
-    this.authRouter = authRouter;
-
+    this.eventRouter=eventRouter;
+    this.pollRouter=pollRouter;
+    this.feedbackRouter=feedbackRouter;
     // Initializing middleware and routes
     this.initializeMiddleware();
     this.initializeRoutes();
@@ -38,28 +36,28 @@ class UserServiceApp {
 
   public static getInstance(
     config: Config,
-    passportJWTStrategy: PassportJWTStrategy,
-    userRouter: UserRouter,
-    authRouter: AuthRouter
-  ): UserServiceApp {
-    if (!UserServiceApp.instance) {
-      UserServiceApp.instance = new UserServiceApp(
+    eventRouter: EventRouter,
+    pollRouter: PollRouter,
+    feedbackRouter: FeedbackRouter
+  ): EventServiceApp {
+    if (!EventServiceApp.instance) {
+      EventServiceApp.instance = new EventServiceApp(
         config,
-        passportJWTStrategy,
-        userRouter,
-        authRouter
+        eventRouter,
+        pollRouter,
+        feedbackRouter
       );
     }
-    return UserServiceApp.instance;
+    return EventServiceApp.instance;
   }
   private initializeMiddleware(): void {
     this.app.use(express.json());
     this.app.use(cors());
-    this.app.use(this.passportJWTStrategy.initialize());
   }
   private initializeRoutes(): void {
-    this.app.use("/authenticate", this.authRouter.getRouter());
-    this.app.use("/", this.userRouter.getRouter());
+    this.app.use("/", this.eventRouter.getRouter());
+    this.app.use("/polls", this.pollRouter.getRouter());
+    this.app.use("/feedback",this.feedbackRouter.getRouter())
   }
   private setupErrorHandling() {
     this.app.use(
@@ -71,9 +69,9 @@ class UserServiceApp {
   }
   public start(): void {
     this.app.listen(this.port, () => {
-      ConsoleLoggerService.log(`User service running on port ${this.port}`);
+      ConsoleLoggerService.log(`Event service running on port ${this.port}`);
     });
   }
 }
 
-export default UserServiceApp;
+export default EventServiceApp;

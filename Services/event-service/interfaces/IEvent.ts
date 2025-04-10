@@ -4,6 +4,7 @@ import { Document } from "mongoose";
 import { ISession } from "./ISession";
 
 export interface IEvent extends Document{
+    _id:string;
     title: string;
     summary: string;// summary
     aboutTheEvent: string[];
@@ -17,6 +18,9 @@ export interface IEvent extends Document{
         end: Date,
         timezone:string
     };
+    pictures:{
+        coverPicture:string;
+    },
     location: string;
     agenda:Array<ISession>;
     streamLink:string,
@@ -28,10 +32,10 @@ export interface IEvent extends Document{
         period_start:Date,
         period_end: Date,
     };
-    tickets:{
+    tickets:Array<{
         name:string;
         price:number;
-    }
+    }>;
     promos:{name:string, discount:number}[];
     // stakeholders: string[];
 }

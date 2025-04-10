@@ -56,58 +56,60 @@ class RoleService implements IRoleService {
     }
   }
 
-  async addRole(roleData: IRole): Promise<IRole> {
-    try {
-      const userRoles = new Roles(roleData);
-      await userRoles.save();
-      return userRoles;
-    } catch (error: any) {
-      throw new Error(`Failed to create roles: ${error.message}`);
-    }
-  }
   async assignRoleToUserByEvent(
     userID: string,
     eventID: string,
     role: Role
-  ): Promise<IRole> {
+): Promise<IRole> {
     try {
-      const userRoles = await Roles.findOne({
-        user: userID,
-        event: eventID,
-      }).exec();
-      if (!userRoles) {
-        throw new Error(
-          `No roles found for user: ${userID} in event: ${eventID}.`
-        );
-      }
+       
+        let userRoles = await Roles.findOne({
+            user: userID,
+            event: eventID,
+        }).exec();
 
-      if (userRoles.roles.includes(role)) {
-        throw new Error(
-          `Role ${role} already exists for user: ${userID} in event: ${eventID}.`
-        );
-      }
+        
+        if (!userRoles) {
+            const newRoleData: IRole = {
+                user: userID,
+                event: eventID,
+                roles: [role], 
+            };
+            userRoles = new Roles(newRoleData);
+            await userRoles.save();
+            return userRoles; 
+        }
 
-      const updatedRoles: IRole = { ...userRoles.toObject() };
-      updatedRoles.roles.push(role);
+        if (userRoles.roles.includes(role)) {
+            throw new Error(
+                `Role ${role} already exists for user: ${userID} in event: ${eventID}.`
+            );
+        }
 
-      const updatedUserRoles: IRole | null = await Roles.findByIdAndUpdate(
-        userRoles._id,
-        updatedRoles,
-        { new: true }
-      ).exec();
-      if (!updatedUserRoles) {
-        throw new Error(
-          `Failed to update roles: Role document not found for user ${userID} in event ${eventID}.`
-        );
-      }
+        userRoles.roles.push(role);
+        const updatedUserRoles = await Roles.findByIdAndUpdate(
+            userRoles._id,
+            { roles: userRoles.roles },
+            { new: true }
+        ).exec();
 
-      return updatedUserRoles;
+        if (!updatedUserRoles) {
+            throw new Error(
+                `Failed to update roles: Role document not found for user ${userID} in event ${eventID}.`
+            );
+        }
+
+        return updatedUserRoles; 
     } catch (err: any) {
-      throw new Error(
-        `Failed to update roles for user: ${userID}, for event: ${eventID}. Error: ${err.message}`
-      );
+        throw new Error(
+            `Failed to assign role for user: ${userID}, for event: ${eventID}. Error: ${err.message}`
+        );
     }
-  }
+}
+async addRole(roleData: IRole): Promise<IRole> {
+   try { const userRoles = new Roles(roleData); await userRoles.save(); return userRoles; }
+    catch (error: any) { throw new Error(`Failed to create roles: ${error.message}`); } 
+  } 
 
   async unassignRoleFromUserByEvent(
     userID: string,

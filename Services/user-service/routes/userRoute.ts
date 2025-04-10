@@ -40,6 +40,11 @@ export default class UserRouter {
       this.authenticateJWT.authenticate,
       this.userController.user_update
     );
+    this.router.put(
+      "/balance/:username",
+      this.authenticateJWT.authenticate,
+      this.userController.user_update_balance
+    );
     this.router.delete(
       "/:username",
       this.authenticateJWT.authenticate,

@@ -65,6 +65,16 @@ export class UserController {
       sendErrorResponse(res, "Failed to update user.", error, 500);
     }
   };
+public user_update_balance = async (req: Request, res: Response): Promise<void> => {
+    const {balance} = req.body;
+    const username = req.params.username;
+    try {
+      const user = await this.userService.updateUserBalance(username, balance);
+      sendSuccessResponse(res, "Successfully updated user balance.", user, 200);
+    } catch (error) {
+      sendErrorResponse(res, "Failed to update user balance.", error, 500);
+    }
+  };
 
   public user_delete = async (req: Request, res: Response): Promise<void> => {
     const username = req.params.username;

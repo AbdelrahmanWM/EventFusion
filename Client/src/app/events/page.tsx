@@ -3,28 +3,16 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useServicesClient } from "@/hooks/userServicesClient";
-export enum EventType {
-  Conference = "Conference",
-  Workshop = "Workshop",
-  Seminar = "Seminar",
-  Webinar = "Webinar"
-}
+import { IEvent,EventType } from "@/interfaces/IEvent";
 
-type Event = {
-  _id: string;
-  title: string;
-  description: string;
-  date: string;
-  location: string;
-  type: EventType;
-  tags: string[];
-};
+
+
 
 export default function EventsPage() {
   const router = useRouter();
 
-  const [events, setEvents] = useState<Event[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<IEvent[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<IEvent[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTypes, setActiveTypes] = useState<EventType[]>([]);
   const [loading, setLoading] = useState(false);
@@ -125,7 +113,7 @@ export default function EventsPage() {
                   <h3 className="text-xl font-semibold mb-1">{event.title}</h3>
                   <p className="text-sm text-gray-600 mb-2">{event.description}</p>
                   <p className="text-sm text-gray-500">📍 {event.location}</p>
-                  <p className="text-sm text-gray-500">📅 {new Date(event.date).toLocaleString()}</p>
+                  <p className="text-sm text-gray-500">📅 {new Date(event.date_time.start).toLocaleString()}</p>
                   <p className="text-sm text-gray-500 mt-1">🏷 Type: {event.type}</p>
                 </div>
                 <button
