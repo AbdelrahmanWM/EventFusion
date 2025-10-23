@@ -1,5 +1,3 @@
-# EventFusion Project SOEN 343 (Winter 2025)
-
 ## Objective
 
 The mission of this project is to develop **EventFusion**, an intelligent and modular Smart Education Event System (SEES) designed to enhance event promotion, networking, and stakeholder engagement. The platform empowers **educators**, **students**, **sponsors**, and **organizers** through advanced features such as AI-powered chat, live event coordination, smart matchmaking, and campaign tracking — all within an intuitive, scalable interface.
@@ -63,12 +61,12 @@ npm run dev
 
 ## Collaborators
 
-| Name                     | Concordia ID | Roles                     |
-| ------------------------ | ------------ | ------------------------- |
-| Abdelrahman Khalifa      | 40253332     | Team Leader               |
-| Johnny Dang              | 40245598     | Software Developer        |
-| Samuditha Wijenarayana   | 40224895     | Software Developer        |
-| Nesrine Larbi            | 40079009     | Software Architect        |
+| Name                      | Roles                     |
+| ------------------------  | ------------------------- |
+| Abdelrahman            | Team Leader               |
+| Johnny                 | Software Developer        |
+| Samuditha      | Software Developer        |
+| Nesrine               | Software Architect        |
 
 ## Technologies
 
